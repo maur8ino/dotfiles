@@ -54,6 +54,7 @@
  '(
    ;ace-jump-mode
    smex
+   projectile
    ;autopair
    ido-hacks
    ido-vertical-mode
@@ -68,6 +69,7 @@
    powerline
    color-theme-solarized
    go-mode
+   go-projectile
 ))
 
 ;; Package manager and packages handler
@@ -124,6 +126,9 @@
 
 ; go-mode
 (require 'go-mode)
+
+; go-projectile
+(require 'go-projectile)
 
 ; smex
 (require 'smex)
