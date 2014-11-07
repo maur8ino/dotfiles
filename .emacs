@@ -19,7 +19,6 @@
 ; shorter yes-no-dialogs
 (fset 'yes-or-no-p 'y-or-n-p)
 
-
 ;; Package managers
 
 ; marmalade
@@ -52,7 +51,7 @@
 (setq
  wanted-packages
  '(
-   ;ace-jump-mode
+   ace-jump-mode
    smex
    projectile
    ;autopair
@@ -86,13 +85,13 @@
     (package-initialize)
     (let ((need-refresh nil))
       (mapc (lambda (package-name)
-          (unless (package-installed-p package-name)
-        (set 'need-refresh t))) wanted-packages)
+	  (unless (package-installed-p package-name)
+	(set 'need-refresh t))) wanted-packages)
       (if need-refresh
-        (package-refresh-contents)))
+	(package-refresh-contents)))
     (mapc (lambda (package-name)
-        (unless (package-installed-p package-name)
-          (package-install package-name))) wanted-packages)
+	(unless (package-installed-p package-name)
+	  (package-install package-name))) wanted-packages)
     )
    ;; el-get
    ((string= pmoc "el-get")
@@ -113,6 +112,14 @@
 (install-wanted-packages)
 
 ;; packages
+; ace-jump-mode
+(require 'ace-jump-mode)
+(eval-when-compile
+  (require 'cl))
+(global-set-key (kbd "C-x C-j") 'ace-jump-word-mode)
+;(global-set-key (kbd "C-M-j") 'ace-jump-word-mode)
+;(global-set-key (kbd "C-x j") 'ace-jump-char-mode)
+  
 ; ido-hacks & ido-vertical-mode
 (require 'ido-hacks)
 (require 'ido-vertical-mode)
@@ -149,3 +156,11 @@
 
 ;theme
 (load-theme 'solarized-dark t)
+
+; always indent using spaces
+(setq-default indent-tabs-mode nil)
+
+; tabs are 4 chars
+(setq-default indent-tabs-mode nil)
+(setq-default tab-width 2)
+(setq indent-line-function 'insert-tab)
