@@ -69,6 +69,8 @@
    color-theme-solarized
    go-mode
    go-projectile
+   js2-mode
+   magit
 ))
 
 ;; Package manager and packages handler
@@ -128,7 +130,6 @@
 
 (require 'switch-window)
 (global-set-key (kbd "C-x C-o") 'switch-window)
-
 (add-hook 'after-init-hook 'global-company-mode)
 
 ; go-mode
@@ -153,6 +154,16 @@
 (setq powerline-arrow-shape 'curve)   ;; give your mode-line curves
 (setq powerline-arrow-shape 'arrow14)
 (powerline-default-theme)
+
+; js2-mode
+(require 'js2-mode)
+; js2-mode for *.js
+(add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
+; tabs are 2 chars in js2
+(add-hook 'js2-mode-hook
+  (lambda ()
+    (setq indent-tabs-mode nil)
+    (setq tab-width 2)))
 
 ;theme
 (load-theme 'solarized-dark t)
