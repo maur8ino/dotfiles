@@ -54,23 +54,19 @@
    ace-jump-mode
    smex
    projectile
-   ;autopair
    ido-hacks
    ido-vertical-mode
    switch-window
    company-mode
-   ;multiple-cursors
-   ;elixir
-   ;erlang-mode
    ;highlight-indentation
    expand-region
-   ;browse-kill-ring
+   browse-kill-ring
    powerline
-   color-theme-solarized
    go-mode
    go-projectile
    js2-mode
    magit
+   gotham-theme
 ))
 
 ;; Package manager and packages handler
@@ -119,8 +115,8 @@
 (eval-when-compile
   (require 'cl))
 (global-set-key (kbd "C-x C-j") 'ace-jump-word-mode)
-;(global-set-key (kbd "C-M-j") 'ace-jump-word-mode)
-;(global-set-key (kbd "C-x j") 'ace-jump-char-mode)
+(global-set-key (kbd "C-M-j") 'ace-jump-word-mode)
+(global-set-key (kbd "C-x j") 'ace-jump-char-mode)
   
 ; ido-hacks & ido-vertical-mode
 (require 'ido-hacks)
@@ -132,6 +128,9 @@
 (global-set-key (kbd "C-x C-o") 'switch-window)
 (add-hook 'after-init-hook 'global-company-mode)
 
+; browse-kill-ring
+(global-set-key (kbd "C-c C-y") 'browse-kill-ring)
+   
 ; go-mode
 (require 'go-mode)
 
@@ -165,13 +164,16 @@
     (setq indent-tabs-mode nil)
     (setq tab-width 2)))
 
+; magit
+(global-set-key (kbd "C-x g") 'magit-status)
+
 ;theme
-(load-theme 'solarized-dark t)
+(load-theme 'gotham t)
 
 ; always indent using spaces
 (setq-default indent-tabs-mode nil)
 
-; tabs are 4 chars
+; tabs are 2 chars
 (setq-default indent-tabs-mode nil)
 (setq-default tab-width 2)
 (setq indent-line-function 'insert-tab)
