@@ -19,6 +19,9 @@
 ; shorter yes-no-dialogs
 (fset 'yes-or-no-p 'y-or-n-p)
 
+; Mac: left alt/option as super
+(setq mac-option-key-is-meta t)
+
 ;; Package managers
 
 ; marmalade
@@ -66,6 +69,7 @@
    go-projectile
    js2-mode
    magit
+   exec-path-from-shell
    gotham-theme
 ))
 
@@ -168,7 +172,11 @@
 ; magit
 (global-set-key (kbd "C-x g") 'magit-status)
 
-;theme
+; Mac: exec-path-from-shell-initialize
+(when (memq window-system '(mac ns))
+  (exec-path-from-shell-initialize))
+
+; theme
 (load-theme 'gotham t)
 
 ; always indent using spaces
