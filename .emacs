@@ -54,9 +54,11 @@
 (setq
  wanted-packages
  '(
+   exec-path-from-shell
    ace-jump-mode
    smex
    projectile
+   magit
    ido-hacks
    ido-vertical-mode
    switch-window
@@ -68,8 +70,6 @@
    go-mode
    go-projectile
    js2-mode
-   magit
-   exec-path-from-shell
    gotham-theme
 ))
 
@@ -122,6 +122,14 @@
 (global-set-key (kbd "C-M-j") 'ace-jump-word-mode)
 (global-set-key (kbd "C-x j") 'ace-jump-char-mode)
   
+; smex
+(require 'smex)
+(smex-initialize)
+(global-set-key (kbd "M-x") 'smex)
+
+; magit
+(global-set-key (kbd "C-x g") 'magit-status)
+
 ; ido-hacks & ido-vertical-mode
 (require 'ido-hacks)
 (require 'ido-vertical-mode)
@@ -132,26 +140,14 @@
 (global-set-key (kbd "C-x C-o") 'switch-window)
 (add-hook 'after-init-hook 'global-company-mode)
 
-; browse-kill-ring
-(global-set-key (kbd "C-c C-y") 'browse-kill-ring)
-   
-; go-mode
-(require 'go-mode)
-(add-hook 'before-save-hook 'gofmt-before-save)
-
-; go-projectile
-(require 'go-projectile)
-
-; smex
-(require 'smex)
-(smex-initialize)
-(global-set-key (kbd "M-x") 'smex)
-
 ; expand-region
 (require 'expand-region)
 (global-set-key (kbd "ESC <up>") 'er/expand-region)
 (global-set-key (kbd "ESC <down>") 'er/contract-region)
 
+; browse-kill-ring
+(global-set-key (kbd "C-c C-y") 'browse-kill-ring)
+   
 ; powerline
 (require 'powerline)
 (setq powerline-arrow-shape 'arrow)   ;; the default
@@ -159,30 +155,29 @@
 (setq powerline-arrow-shape 'arrow14)
 (powerline-default-theme)
 
+; go-mode
+(require 'go-mode)
+(add-hook 'before-save-hook 'gofmt-before-save)
+
+; go-projectile
+(require 'go-projectile)
+
 ; js2-mode
 (require 'js2-mode)
 ; js2-mode for *.js
 (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
 ; tabs are 2 chars in js2
+(custom-set-variables
+ '(js2-basic-offset 2))
+
 (add-hook 'js2-mode-hook
   (lambda ()
     (setq indent-tabs-mode nil)
     (setq tab-width 2)))
 
-; magit
-(global-set-key (kbd "C-x g") 'magit-status)
+; theme
+(load-theme 'gotham t)
 
 ; Mac: exec-path-from-shell-initialize
 (when (memq window-system '(mac ns))
   (exec-path-from-shell-initialize))
-
-; theme
-(load-theme 'gotham t)
-
-; always indent using spaces
-(setq-default indent-tabs-mode nil)
-
-; tabs are 2 chars
-(setq-default indent-tabs-mode nil)
-(setq-default tab-width 2)
-(setq indent-line-function 'insert-tab)
