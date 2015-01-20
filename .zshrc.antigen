@@ -1,6 +1,5 @@
 
 PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
-fpath=(/usr/local/share/zsh-completions $fpath)
 
 # Antigen
 source ~/dotfiles/antigen/antigen.zsh
@@ -21,6 +20,10 @@ antigen bundle zsh-users/zsh-syntax-highlighting
 
 # History search substring
 antigen-bundle zsh-users/zsh-history-substring-search
+
+# Completions
+antigen bundle zsh-users/zsh-completions src
+antigen bundle yonchu/grunt-zsh-completion
 
 # Load the theme.
 antigen theme robbyrussell
