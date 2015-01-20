@@ -2,17 +2,6 @@
 PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
 fpath=(/usr/local/share/zsh-completions $fpath)
 
-#Syntax highlighting
-#source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-
-#History substring search
-#source /usr/local/opt/zsh-history-substring-search/zsh-history-substring-search.zsh
-
-# bind UP and DOWN arrow keys
-zmodload zsh/terminfo
-bindkey "$terminfo[kcuu1]" history-substring-search-up
-bindkey "$terminfo[kcud1]" history-substring-search-down
-
 # Antigen
 source ~/dotfiles/antigen/antigen.zsh
 
@@ -29,6 +18,9 @@ EOBUNDLES
 
 # Syntax highlighting bundle.
 antigen bundle zsh-users/zsh-syntax-highlighting
+
+# History search substring
+antigen-bundle zsh-users/zsh-history-substring-search
 
 # Load the theme.
 antigen theme robbyrussell
