@@ -32,9 +32,22 @@ antigen theme robbyrussell
 # Tell antigen that you're done.
 antigen apply
 
+# Keybinding substring search
+zmodload zsh/terminfo
+bindkey "$terminfo[kcuu1]" history-substring-search-up
+bindkey "$terminfo[kcud1]" history-substring-search-down
+
 # rbenv
 export PATH="$HOME/.rbenv/bin:$PATH"
 eval "$(rbenv init -)"
 
 # Setting editor
-export EDITOR='/usr/local/bin/emacs'
+export EDITOR="$(which emacs)"
+
+# Setting Go path
+export GOPATH=~/go
+
+# Tuna
+export TUNA_HOME="/Users/maur8ino/projects/Tuna"
+export PATH="$TUNA_HOME:$PATH"
+
