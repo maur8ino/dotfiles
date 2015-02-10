@@ -21,6 +21,7 @@ antigen-bundle zsh-users/zsh-history-substring-search
 # Completions
 antigen bundle zsh-users/zsh-completions src
 antigen bundle yonchu/grunt-zsh-completion
+antigen bundle felixr/docker-zsh-completion
 
 # Load the theme.
 antigen theme robbyrussell
@@ -51,3 +52,6 @@ export GOPATH=~/go
 export TUNA_HOME="/Users/maur8ino/projects/Tuna"
 export PATH="$TUNA_HOME:$PATH"
 
+# Do not enter command lines into the history list
+# if they are duplicates of the previous event
+setopt histignoredups
