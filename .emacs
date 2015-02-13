@@ -176,6 +176,7 @@
     (setq tab-width 2)))
 
 ; theme
+(add-to-list 'custom-theme-load-path (expand-file-name "~/.emacs.d/el-get/gotham-theme"))
 (load-theme 'gotham t)
 
 ; Mac: exec-path-from-shell-initialize
