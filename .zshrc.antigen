@@ -21,6 +21,7 @@ antigen-bundle zsh-users/zsh-history-substring-search
 # Completions
 antigen bundle zsh-users/zsh-completions src
 antigen bundle yonchu/grunt-zsh-completion
+antigen bundle emallson/gulp-zsh-completion
 antigen bundle felixr/docker-zsh-completion
 
 # Load the theme.
