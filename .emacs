@@ -182,3 +182,5 @@
 ; Mac: exec-path-from-shell-initialize
 (when (memq window-system '(mac ns))
   (exec-path-from-shell-initialize))
+; and set Option key to meta
+(setq mac-option-modifier 'meta)
