@@ -48,6 +48,7 @@ export EDITOR="$(which emacs)"
 
 # Setting Go path
 export GOPATH=~/go
+export PATH="$GOPATH/bin:$PATH"
 
 # Tuna
 export TUNA_HOME="/Users/maur8ino/projects/Tuna"
