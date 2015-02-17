@@ -1,14 +1,14 @@
-; no menu bar
+;; no menu bar
 (menu-bar-mode -1)
 (tool-bar-mode -1)
 
-; no scroll bars
+;; no scroll bars
 (scroll-bar-mode 0)
 
-; enable narrowing
+;; enable narrowing
 (put 'narrow-to-region 'disabled nil)
 
-; backups in .saves
+;; backups in .saves
 (setq backup-directory-alist `(("." . "~/.saves")))
 (setq backup-by-copying t)
 (setq delete-old-versions t
@@ -16,15 +16,12 @@
   kept-old-versions 2
   version-control t)
 
-; shorter yes-no-dialogs
+;; shorter yes-no-dialogs
 (fset 'yes-or-no-p 'y-or-n-p)
-
-; Mac: left alt/option as super
-(setq mac-option-key-is-meta t)
 
 ;; Package managers
 
-; marmalade
+;; marmalade
 (require 'package)
 (add-to-list 'package-archives
     '("melpa" .
@@ -118,7 +115,7 @@
 (install-wanted-packages)
 
 ;; packages
-; ace-jump-mode
+;; ace-jump-mode
 (require 'ace-jump-mode)
 (eval-when-compile
   (require 'cl))
@@ -126,15 +123,15 @@
 (global-set-key (kbd "C-M-j") 'ace-jump-word-mode)
 (global-set-key (kbd "C-x j") 'ace-jump-char-mode)
   
-; smex
+;; smex
 (require 'smex)
 (smex-initialize)
 (global-set-key (kbd "M-x") 'smex)
 
-; magit
+;; magit
 (global-set-key (kbd "C-x g") 'magit-status)
 
-; ido-hacks & ido-vertical-mode
+;; ido-hacks & ido-vertical-mode
 (require 'ido-hacks)
 (require 'ido-vertical-mode)
 (ido-mode t)
@@ -144,7 +141,7 @@
 (global-set-key (kbd "C-x C-o") 'switch-window)
 (add-hook 'after-init-hook 'global-company-mode)
 
-; expand-region
+;; expand-region
 (require 'expand-region)
 (global-set-key (kbd "ESC <up>") 'er/expand-region)
 (global-set-key (kbd "ESC <down>") 'er/contract-region)
@@ -152,29 +149,29 @@
 ; browse-kill-ring
 (global-set-key (kbd "C-c C-y") 'browse-kill-ring)
    
-; powerline
+;; powerline
 (require 'powerline)
 (setq powerline-arrow-shape 'arrow)   ;; the default
 (setq powerline-arrow-shape 'curve)   ;; give your mode-line curves
 (setq powerline-arrow-shape 'arrow14)
 (powerline-default-theme)
 
-; neotree
+;; neotree
 (require 'neotree)
 (global-set-key (kbd "C-c n") 'neotree-toggle)
 
-; go-mode
+;; go-mode
 (require 'go-mode)
 (add-hook 'before-save-hook 'gofmt-before-save)
 
-; go-projectile
+;; go-projectile
 (require 'go-projectile)
 
-; js2-mode
+;; js2-mode
 (require 'js2-mode)
-; js2-mode for *.js
+;; js2-mode for *.js
 (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
-; tabs are 2 chars in js2
+;; tabs are 2 chars in js2
 (custom-set-variables
  '(js2-basic-offset 2))
 
@@ -183,27 +180,30 @@
 	    (setq indent-tabs-mode nil)
 	    (setq tab-width 2)))
 
-; php-mode
+;; php-mode
 (require 'php-mode)
 (add-hook 'php-mode-hook 'php-enable-default-coding-style)
 
-; yaml-mode
+;; yaml-mode
 (require 'yaml-mode)
 (add-to-list 'auto-mode-alist '("\\.ya?ml$" . yaml-mode))
 (add-hook 'yaml-mode-hook
 	  (lambda ()
 	    (define-key yaml-mode-map "\C-m" 'newline-and-indent)))
 
-; markdown-mode
+;; markdown-mode
 (require 'markdown-mode)
 (add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
 
-; theme
+;; theme
 (add-to-list 'custom-theme-load-path (expand-file-name "~/.emacs.d/el-get/gotham-theme"))
 (load-theme 'gotham t)
 
-; Mac: exec-path-from-shell-initialize
+;; Mac: exec-path-from-shell-initialize
 (when (memq window-system '(mac ns))
   (exec-path-from-shell-initialize))
-; and set Option key to meta
+;; and set Option key to meta
 (setq mac-option-modifier 'meta)
+;; and left alt/option as super
+(setq mac-option-key-is-meta t)
+
