@@ -67,9 +67,13 @@
    expand-region
    browse-kill-ring
    powerline
+   neotree
    go-mode
    go-projectile
    js2-mode
+   php-mode
+   yaml-mode
+   markdown-mode
    gotham-theme
 ))
 
@@ -155,6 +159,10 @@
 (setq powerline-arrow-shape 'arrow14)
 (powerline-default-theme)
 
+; neotree
+(require 'neotree)
+(global-set-key (kbd "C-c n") 'neotree-toggle)
+
 ; go-mode
 (require 'go-mode)
 (add-hook 'before-save-hook 'gofmt-before-save)
@@ -171,9 +179,24 @@
  '(js2-basic-offset 2))
 
 (add-hook 'js2-mode-hook
-  (lambda ()
-    (setq indent-tabs-mode nil)
-    (setq tab-width 2)))
+	  (lambda ()
+	    (setq indent-tabs-mode nil)
+	    (setq tab-width 2)))
+
+; php-mode
+(require 'php-mode)
+(add-hook 'php-mode-hook 'php-enable-default-coding-style)
+
+; yaml-mode
+(require 'yaml-mode)
+(add-to-list 'auto-mode-alist '("\\.ya?ml$" . yaml-mode))
+(add-hook 'yaml-mode-hook
+	  (lambda ()
+	    (define-key yaml-mode-map "\C-m" 'newline-and-indent)))
+
+; markdown-mode
+(require 'markdown-mode)
+(add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
 
 ; theme
 (add-to-list 'custom-theme-load-path (expand-file-name "~/.emacs.d/el-get/gotham-theme"))
