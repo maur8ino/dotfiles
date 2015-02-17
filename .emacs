@@ -23,12 +23,9 @@
 
 ;; marmalade
 (require 'package)
-(add-to-list 'package-archives
-    '("melpa" .
-      "http://melpa.milkbox.net/packages/") t)
-(add-to-list 'package-archives
-    '("marmalade" .
-      "http://marmalade-repo.org/packages/"))
+(add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/"))
+(add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/"))
+(add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
 (package-initialize)
 
 ;; el-get
@@ -45,7 +42,7 @@
 (el-get 'sync)
 
 ;; Set up the package manager of choice. Supports "el-get" and "package.el"
-(setq pmoc "el-get")
+(setq pmoc "package.el")
 
 ;; List of all wanted packages
 (setq
@@ -59,17 +56,24 @@
    ido-hacks
    ido-vertical-mode
    switch-window
-   company-mode
-   ;highlight-indentation
+   company
+   highlight-indentation
    expand-region
    browse-kill-ring
    powerline
    neotree
    go-mode
    go-projectile
+   ;; javascript stuff
+   ac-js2
    js2-mode
+   js2-refactor
+   react-snippets
+   ;; php stuff
    php-mode
+   ;; yaml stuff
    yaml-mode
+   ;; markdown stuff
    markdown-mode
    gotham-theme
 ))
@@ -148,7 +152,7 @@
 
 ; browse-kill-ring
 (global-set-key (kbd "C-c C-y") 'browse-kill-ring)
-   
+
 ;; powerline
 (require 'powerline)
 (setq powerline-arrow-shape 'arrow)   ;; the default
@@ -169,16 +173,20 @@
 
 ;; js2-mode
 (require 'js2-mode)
-;; js2-mode for *.js
-(add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
+;; js2-mode for *.js, *.jsx and *.json
+(add-to-list 'auto-mode-alist '("\\.jsx?\\'" . js2-mode))
+(add-to-list 'auto-mode-alist '("\\.json$" . js-mode))
 ;; tabs are 2 chars in js2
 (custom-set-variables
  '(js2-basic-offset 2))
-
+(add-hook 'js-mode-hook 'js2-minor-mode)
 (add-hook 'js2-mode-hook
 	  (lambda ()
 	    (setq indent-tabs-mode nil)
-	    (setq tab-width 2)))
+	    (setq tab-width 2)
+	    (ac-js2-mode)))
+
+(setq js2-highlight-level 2)
 
 ;; php-mode
 (require 'php-mode)
