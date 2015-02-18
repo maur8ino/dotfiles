@@ -64,11 +64,17 @@
    neotree
    go-mode
    go-projectile
+   ;; template stuff
+   web-mode
    ;; javascript stuff
    ac-js2
    js2-mode
    js2-refactor
    react-snippets
+   ;; css, sass & scss
+   css-mode
+   scss-mode
+   sass-mode
    ;; php stuff
    php-mode
    ;; yaml stuff
@@ -171,6 +177,18 @@
 ;; go-projectile
 (require 'go-projectile)
 
+;; web-mode
+(require 'web-mode)
+(add-to-list 'auto-mode-alist '("\\.phtml\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.tpl\\.php\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.[agj]sp\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.as[cp]x\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.erb\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.mustache\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.djhtml\\'" . web-mode))
+;; using web-mode with html also
+(add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
+
 ;; js2-mode
 (require 'js2-mode)
 ;; js2-mode for *.js, *.jsx and *.json
@@ -185,8 +203,15 @@
 	    (setq indent-tabs-mode nil)
 	    (setq tab-width 2)
 	    (ac-js2-mode)))
-
+;; set highlight level
 (setq js2-highlight-level 2)
+
+;; scss-mode
+(add-to-list 'auto-mode-alist '("\\.scss\\'" . scss-mode))
+(add-hook 'scss-mode-hook
+	  (lambda()
+	    (setq indent-tabs-mode nil)
+	    (setq tab-width 2)))
 
 ;; php-mode
 (require 'php-mode)
