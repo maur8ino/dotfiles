@@ -200,8 +200,8 @@
 (add-hook 'js-mode-hook 'js2-minor-mode)
 (add-hook 'js2-mode-hook
 	  (lambda ()
-	    (setq indent-tabs-mode nil)
-	    (setq tab-width 2)
+	    (setq indent-tabs-mode nil
+		  tab-width 2)
 	    (ac-js2-mode)))
 ;; set highlight level
 (setq js2-highlight-level 2)
@@ -210,8 +210,8 @@
 (add-to-list 'auto-mode-alist '("\\.scss\\'" . scss-mode))
 (add-hook 'scss-mode-hook
 	  (lambda()
-	    (setq indent-tabs-mode nil)
-	    (setq tab-width 2)))
+	    (setq indent-tabs-mode nil
+		  tab-width 2)))
 
 ;; php-mode
 (require 'php-mode)
