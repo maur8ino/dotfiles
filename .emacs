@@ -53,6 +53,7 @@
    smex
    projectile
    magit
+   magit-gh-pulls
    ido-hacks
    ido-vertical-mode
    switch-window
@@ -140,6 +141,8 @@
 
 ;; magit
 (global-set-key (kbd "C-x g") 'magit-status)
+(global-set-key (kbd "C-c l") 'magit-log)
+(add-hook 'magit-mode-hook 'turn-on-magit-gh-pulls)
 
 ;; ido-hacks & ido-vertical-mode
 (require 'ido-hacks)
@@ -147,8 +150,11 @@
 (ido-mode t)
 (ido-vertical-mode)
 
+;; switch-window
 (require 'switch-window)
 (global-set-key (kbd "C-x C-o") 'switch-window)
+
+;; company-mode
 (add-hook 'after-init-hook 'global-company-mode)
 
 ;; expand-region
