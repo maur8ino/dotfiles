@@ -22,6 +22,9 @@
 ;; shorter yes-no-dialogs
 (fset 'yes-or-no-p 'y-or-n-p)
 
+;; Are we on a mac?
+(setq is-mac (equal system-type 'darwin))
+
 ;; Package managers
 
 ;; List of all wanted packages
@@ -201,10 +204,25 @@
 (load-theme 'gotham t)
 
 ;; Mac: exec-path-from-shell-initialize
-(when (memq window-system '(mac ns))
-  (exec-path-from-shell-initialize))
-;; and set Option key to meta
-(setq mac-option-modifier 'meta)
-;; and left alt/option as super
-(setq mac-option-key-is-meta t)
+;; Setup environment variables from the user's shell.
+(when is-mac
+  (require 'exec-path-from-shell)
+  (exec-path-from-shell-initialize)
 
+  ;; change command to meta and ignore option
+  (setq mac-option-modifier 'super)
+  (setq mac-command-modifier 'meta)
+  (setq ns-function-modifier 'hyper)
+
+  ;; mac friendly font
+  (when window-system
+    (setq magnars/default-font "-apple-Menlo-medium-normal-normal-*-12-*-*-*-m-0-iso10646-1")
+    (setq magnars/presentation-font "-apple-Menlo-medium-normal-normal-*-18-*-*-*-m-0-iso10646-1")
+    (set-face-attribute 'default nil :font magnars/default-font))
+
+  ;; Move to trash when deleting stuff
+  (setq delete-by-moving-to-trash t
+	trash-directory "~/.Trash/emacs")
+
+  ;; Ignore .DS_Store files with ido mode
+  (add-to-list 'ido-ignore-files "\\.DS_Store"))
