@@ -39,6 +39,7 @@
    magit-gh-pulls
    ido-hacks
    ido-vertical-mode
+   flx-ido
    switch-window
    company
    highlight-indentation
@@ -114,7 +115,8 @@
 (require 'ido-hacks)
 (require 'ido-vertical-mode)
 (ido-mode t)
-(ido-vertical-mode)
+(ido-vertical-mode t)
+(flx-ido-mode t)
 
 ;; switch-window
 (require 'switch-window)
