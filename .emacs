@@ -8,6 +8,9 @@
 ;; enable narrowing
 (put 'narrow-to-region 'disabled nil)
 
+;; line mode
+(hl-line-mode t)
+
 ;; backups in .saves
 (setq backup-directory-alist `(("." . "~/.saves")))
 (setq backup-by-copying t)
@@ -100,7 +103,7 @@
 (global-set-key (kbd "M-x") 'smex)
 
 ;; magit
-(global-set-key (kbd "C-x g") 'magit-status)
+(global-set-key (kbd "C-c g") 'magit-status)
 (global-set-key (kbd "C-c l") 'magit-log)
 (add-hook 'magit-mode-hook 'turn-on-magit-gh-pulls)
 
@@ -195,7 +198,6 @@
 (add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
 
 ;; theme
-(add-to-list 'custom-theme-load-path (expand-file-name "~/.emacs.d/el-get/gotham-theme"))
 (load-theme 'gotham t)
 
 ;; Mac: exec-path-from-shell-initialize
