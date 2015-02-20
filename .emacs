@@ -131,7 +131,9 @@
 (global-set-key (kbd "ESC <down>") 'er/contract-region)
 
 ; browse-kill-ring
+(require 'browse-kill-ring)
 (global-set-key (kbd "C-c C-y") 'browse-kill-ring)
+(setq browse-kill-ring-quit-action 'save-and-restore)
 
 ;; powerline
 (require 'powerline)
@@ -178,7 +180,17 @@
 		  tab-width 2)
 	    (ac-js2-mode)))
 ;; set highlight level
-(setq js2-highlight-level 2)
+(setq-default js2-highlight-level 2)
+;; no indent on new lines and enter
+(setq-default js2-enter-indents-newline nil)
+(setq-default js2-indent-on-enter-key nil)
+;; mirror mode off
+(setq-default js2-mirror-mode nil)
+;; Let flycheck handle parse errors
+(setq-default js2-show-parse-errors nil)
+(setq-default js2-strict-missing-semi-warning nil)
+(setq-default js2-strict-trailing-comma-warning t) ;; jshint does not warn about this now for some reason
+(add-hook 'js2-mode-hook (lambda () (flycheck-mode 1)))
 
 ;; scss-mode
 (add-to-list 'auto-mode-alist '("\\.scss\\'" . scss-mode))
