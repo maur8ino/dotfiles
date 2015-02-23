@@ -8,9 +8,6 @@
 ;; enable narrowing
 (put 'narrow-to-region 'disabled nil)
 
-;; line mode
-(hl-line-mode t)
-
 ;; backups in .saves
 (setq backup-directory-alist `(("." . "~/.saves")))
 (setq backup-by-copying t)
@@ -31,7 +28,10 @@
 (setq
  wanted-packages
  '(
+   ;; mac specific
    exec-path-from-shell
+   ;; ignore common files
+   ignoramus
    ace-jump-mode
    smex
    projectile
@@ -60,14 +60,19 @@
    css-mode
    scss-mode
    sass-mode
+   ;; coffee-mode (hipster's not dead)
+   coffee-mode
    ;; php stuff
    php-mode
    ;; yaml stuff
    yaml-mode
    ;; markdown stuff
    markdown-mode
-   gotham-theme
-))
+   ;; themes
+   ;gotham-theme
+   ;color-theme-sanityinc-tomorrow
+   zenburn-theme
+   ))
 
 ;; Package manager and packages handler
 (defun install-wanted-packages ()
@@ -93,6 +98,10 @@
 (install-wanted-packages)
 
 ;; packages
+;; ignoramus
+(require 'ignoramus)
+(ignoramus-setup)
+
 ;; ace-jump-mode
 (require 'ace-jump-mode)
 (eval-when-compile
@@ -109,7 +118,8 @@
 ;; magit
 (global-set-key (kbd "C-c g") 'magit-status)
 (global-set-key (kbd "C-c l") 'magit-log)
-(add-hook 'magit-mode-hook 'turn-on-magit-gh-pulls)
+(global-set-key (kbd "C-c o") 'magit-checkout)
+;(add-hook 'magit-mode-hook 'turn-on-magit-gh-pulls)
 
 ;; ido-hacks & ido-vertical-mode
 (require 'ido-hacks)
@@ -152,6 +162,7 @@
 
 ;; go-projectile
 (require 'go-projectile)
+(global-set-key (kbd "M-p") 'projectile-find-file)
 
 ;; web-mode
 (require 'web-mode)
@@ -171,26 +182,22 @@
 (add-to-list 'auto-mode-alist '("\\.jsx?\\'" . js2-mode))
 (add-to-list 'auto-mode-alist '("\\.json$" . js-mode))
 ;; tabs are 2 chars in js2
-(custom-set-variables
- '(js2-basic-offset 2))
 (add-hook 'js-mode-hook 'js2-minor-mode)
 (add-hook 'js2-mode-hook
 	  (lambda ()
-	    (setq indent-tabs-mode nil
+	    (setq-default indent-tabs-mode nil
 		  tab-width 2)
 	    (ac-js2-mode)))
+(setq-default js2-basic-offset 2)
 ;; set highlight level
 (setq-default js2-highlight-level 2)
-;; no indent on new lines and enter
-(setq-default js2-enter-indents-newline nil)
-(setq-default js2-indent-on-enter-key nil)
 ;; mirror mode off
 (setq-default js2-mirror-mode nil)
 ;; Let flycheck handle parse errors
 (setq-default js2-show-parse-errors nil)
 (setq-default js2-strict-missing-semi-warning nil)
 (setq-default js2-strict-trailing-comma-warning t) ;; jshint does not warn about this now for some reason
-(add-hook 'js2-mode-hook (lambda () (flycheck-mode 1)))
+;(add-hook 'js2-mode-hook (lambda () (flycheck-mode 1)))
 
 ;; scss-mode
 (add-to-list 'auto-mode-alist '("\\.scss\\'" . scss-mode))
@@ -215,7 +222,12 @@
 (add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
 
 ;; theme
-(load-theme 'gotham t)
+;(load-theme 'gotham t)
+;(load-theme 'sanityinc-tomorrow-night t)
+(load-theme 'zenburn t)
+
+;; line mode
+(hl-line-mode t)
 
 ;; Mac: exec-path-from-shell-initialize
 ;; Setup environment variables from the user's shell.
@@ -230,9 +242,9 @@
 
   ;; mac friendly font
   (when window-system
-    (setq magnars/default-font "-apple-Menlo-medium-normal-normal-*-12-*-*-*-m-0-iso10646-1")
-    (setq magnars/presentation-font "-apple-Menlo-medium-normal-normal-*-18-*-*-*-m-0-iso10646-1")
-    (set-face-attribute 'default nil :font magnars/default-font))
+    (setq maur8ino/default-font "-apple-Menlo-medium-normal-normal-*-12-*-*-*-m-0-iso10646-1")
+    (setq maur8ino/presentation-font "-apple-Menlo-medium-normal-normal-*-18-*-*-*-m-0-iso10646-1")
+    (set-face-attribute 'default nil :font maur8ino/default-font))
 
   ;; Move to trash when deleting stuff
   (setq delete-by-moving-to-trash t
