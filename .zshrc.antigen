@@ -23,6 +23,7 @@ antigen bundle zsh-users/zsh-completions src
 antigen bundle yonchu/grunt-zsh-completion
 antigen bundle emallson/gulp-zsh-completion
 antigen bundle felixr/docker-zsh-completion
+antigen bundle robbyrussell/oh-my-zsh plugins/brew-cask
 
 # Load the theme.
 antigen theme robbyrussell
@@ -39,12 +40,22 @@ zmodload zsh/terminfo
 bindkey "$terminfo[kcuu1]" history-substring-search-up
 bindkey "$terminfo[kcud1]" history-substring-search-down
 
+# home bin folder
+export PATH="$HOME/bin:$PATH"
+
 # rbenv
 export PATH="$HOME/.rbenv/bin:$PATH"
 eval "$(rbenv init -)"
 
+# nvm
+export NVM_DIR=~/.nvm
+source $(brew --prefix nvm)/nvm.sh
+
 # Setting editor
 export EDITOR="$(which emacs)"
+
+# Specify your defaults in this environment variable
+export HOMEBREW_CASK_OPTS="--appdir=/Applications"
 
 # Setting Go path
 export GOPATH=~/go
