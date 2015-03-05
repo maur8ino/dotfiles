@@ -1,3 +1,7 @@
+;;; package --- Summary
+;;; Commentary:
+;;; Code:
+
 ;; no menu bar
 (menu-bar-mode -1)
 (tool-bar-mode -1)
@@ -37,6 +41,7 @@
    projectile
    magit
    magit-gh-pulls
+   diff-hl
    ido-hacks
    ido-vertical-mode
    flx-ido
@@ -47,6 +52,7 @@
    browse-kill-ring
    powerline
    neotree
+   ;; go
    go-mode
    go-projectile
    ;; template stuff
@@ -69,9 +75,11 @@
    ;; markdown stuff
    markdown-mode
    ;; themes
-   ;gotham-theme
-   ;color-theme-sanityinc-tomorrow
-   zenburn-theme
+   gotham-theme
+   ;;color-theme-sanityinc-tomorrow
+   ;;zenburn-theme
+   obsidian-theme
+   flycheck
    ))
 
 ;; Package manager and packages handler
@@ -102,6 +110,9 @@
 (require 'ignoramus)
 (ignoramus-setup)
 
+;; projectile
+(projectile-global-mode)
+
 ;; ace-jump-mode
 (require 'ace-jump-mode)
 (eval-when-compile
@@ -119,7 +130,11 @@
 (global-set-key (kbd "C-c g") 'magit-status)
 (global-set-key (kbd "C-c l") 'magit-log)
 (global-set-key (kbd "C-c o") 'magit-checkout)
-;(add-hook 'magit-mode-hook 'turn-on-magit-gh-pulls)
+(add-hook 'magit-mode-hook
+          (lambda ()
+            (turn-on-magit-gh-pulls)
+            (setq magit-gh-pulls-collapse-commits t)))
+
 
 ;; ido-hacks & ido-vertical-mode
 (require 'ido-hacks)
@@ -156,13 +171,12 @@
 (require 'neotree)
 (global-set-key (kbd "C-c n") 'neotree-toggle)
 
+;; flycheck
+(add-hook 'after-init-hook #'global-flycheck-mode)
+
 ;; go-mode
 (require 'go-mode)
 (add-hook 'before-save-hook 'gofmt-before-save)
-
-;; go-projectile
-(require 'go-projectile)
-(global-set-key (kbd "M-p") 'projectile-find-file)
 
 ;; web-mode
 (require 'web-mode)
@@ -186,8 +200,9 @@
 (add-hook 'js2-mode-hook
 	  (lambda ()
 	    (setq-default indent-tabs-mode nil
-		  tab-width 2)
+                    tab-width 2)
 	    (ac-js2-mode)))
+
 (setq-default js2-basic-offset 2)
 ;; set highlight level
 (setq-default js2-highlight-level 2)
@@ -196,15 +211,19 @@
 ;; Let flycheck handle parse errors
 (setq-default js2-show-parse-errors nil)
 (setq-default js2-strict-missing-semi-warning nil)
-(setq-default js2-strict-trailing-comma-warning t) ;; jshint does not warn about this now for some reason
-;(add-hook 'js2-mode-hook (lambda () (flycheck-mode 1)))
+(setq-default js2-strict-trailing-comma-warning t)
 
-;; scss-mode
+;; (s)css-mode
 (add-to-list 'auto-mode-alist '("\\.scss\\'" . scss-mode))
+(add-hook 'css-mode-hook
+          (lambda ()
+            (setq indent-tabs-mode nil
+                  css-basic-offset 2)))
+
 (add-hook 'scss-mode-hook
-	  (lambda()
-	    (setq indent-tabs-mode nil
-		  tab-width 2)))
+          (lambda ()
+            (setq indent-tabs-mode nil
+                  tab-width 2)))
 
 ;; php-mode
 (require 'php-mode)
@@ -217,17 +236,32 @@
 	  (lambda ()
 	    (define-key yaml-mode-map "\C-m" 'newline-and-indent)))
 
+;; ruby-mode
+(add-to-list 'auto-mode-alist
+             '("\\.\\(?:gemspec\\|irbrc\\|gemrc\\|rake\\|rb\\|ru\\|thor\\)\\'" . ruby-mode))
+(add-to-list 'auto-mode-alist
+             '("\\(Capfile\\|Gemfile\\(?:\\.[a-zA-Z0-9._-]+\\)?\\|[rR]akefile\\)\\'" . ruby-mode))
+(add-hook 'ruby-mode-hook
+          (lambda()
+            (local-set-key "\r" 'newline-and-indent)
+            (flymake-ruby-load)))
+
 ;; markdown-mode
 (require 'markdown-mode)
 (add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
 
 ;; theme
-;(load-theme 'gotham t)
+;;(load-theme 'gotham t)
 ;(load-theme 'sanityinc-tomorrow-night t)
-(load-theme 'zenburn t)
+;(load-theme 'zenburn t)
+(load-theme 'obsidian t)
 
+;; diff-hl
+(diff-hl-mode t)
 ;; line mode
 (hl-line-mode t)
+;; line numbers
+(linum-mode t)
 
 ;; Mac: exec-path-from-shell-initialize
 ;; Setup environment variables from the user's shell.
@@ -252,3 +286,6 @@
 
   ;; Ignore .DS_Store files with ido mode
   (add-to-list 'ido-ignore-files "\\.DS_Store"))
+
+(provide '.emacs)
+;;; .emacs ends here
