@@ -209,9 +209,11 @@
 (add-to-list 'auto-mode-alist '("\\.hbs$" . web-mode))
 (add-hook 'web-mode-hook
           (lambda ()
-            (setq-default web-mode-markup-indent-offset 2)
-            (setq-default web-mode-css-indent-offset 2)
-            (setq-default web-mode-code-indent-offset 2)
+            (setq web-mode-markup-indent-offset 2
+                  web-mode-css-indent-offset 2
+                  web-mode-code-indent-offset 2
+                  web-mode-enable-current-element-highlight t
+		  web-mode-enable-current-column-highlight t)
             (devel-modes-hook)))
 
 ;; js2-mode
