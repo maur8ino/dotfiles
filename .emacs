@@ -57,6 +57,7 @@
    go-projectile
    ;; template stuff
    web-mode
+   web-beautify
    ;; javascript stuff
    ac-js2
    js2-mode
@@ -84,7 +85,7 @@
 
 ;; Package manager and packages handler
 (defun install-wanted-packages ()
-  "Install wanted packages according to a specific package manager"
+  "Install wanted packages according to a specific package manager."
   ;; package.el
   (require 'package)
   (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/"))
@@ -102,10 +103,21 @@
 	    (package-install package-name))) wanted-packages)
   )
 
+;; Devel text modes mode
+(defun devel-modes-hook ()
+  "Activate minor modes for developing."
+  ;; diff-hl
+  (diff-hl-mode t)
+  ;; line mode
+  (hl-line-mode t)
+  ;; line numbers
+  (linum-mode t))
+
 ;; Install wanted packages
 (install-wanted-packages)
 
-;; packages
+;; PACKAGES
+
 ;; ignoramus
 (require 'ignoramus)
 (ignoramus-setup)
@@ -174,6 +186,9 @@
 ;; flycheck
 (add-hook 'after-init-hook #'global-flycheck-mode)
 
+;; lisp-mode
+(add-hook 'lisp-mode 'devel-modes-hook)
+
 ;; go-mode
 (require 'go-mode)
 (add-hook 'before-save-hook 'gofmt-before-save)
@@ -189,6 +204,15 @@
 (add-to-list 'auto-mode-alist '("\\.djhtml\\'" . web-mode))
 ;; using web-mode with html also
 (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
+;; using web-mode with handlebars also
+(add-to-list 'auto-mode-alist '("\\.handlebars$" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.hbs$" . web-mode))
+(add-hook 'web-mode-hook
+          (lambda ()
+            (setq-default web-mode-markup-indent-offset 2)
+            (setq-default web-mode-css-indent-offset 2)
+            (setq-default web-mode-code-indent-offset 2)
+            (devel-modes-hook)))
 
 ;; js2-mode
 (require 'js2-mode)
@@ -198,10 +222,11 @@
 ;; tabs are 2 chars in js2
 (add-hook 'js-mode-hook 'js2-minor-mode)
 (add-hook 'js2-mode-hook
-	  (lambda ()
-	    (setq-default indent-tabs-mode nil
-                    tab-width 2)
-	    (ac-js2-mode)))
+          (lambda ()
+            (setq-default indent-tabs-mode nil
+                          tab-width 2)
+            (ac-js2-mode)
+            (devel-modes-hook)))
 
 (setq-default js2-basic-offset 2)
 ;; set highlight level
@@ -218,23 +243,22 @@
 (add-hook 'css-mode-hook
           (lambda ()
             (setq indent-tabs-mode nil
-                  css-basic-offset 2)))
+                  css-basic-offset 2)
+            (devel-modes-hook)))
 
 (add-hook 'scss-mode-hook
           (lambda ()
             (setq indent-tabs-mode nil
-                  tab-width 2)))
+                  tab-width 2))
+            (devel-modes-hook))
 
 ;; php-mode
 (require 'php-mode)
-(add-hook 'php-mode-hook 'php-enable-default-coding-style)
+(add-hook 'php-mode-hook
+          (lambda ()
+            (php-enable-default-coding-style)
+            (devel-modes-hook)))
 
-;; yaml-mode
-(require 'yaml-mode)
-(add-to-list 'auto-mode-alist '("\\.ya?ml$" . yaml-mode))
-(add-hook 'yaml-mode-hook
-	  (lambda ()
-	    (define-key yaml-mode-map "\C-m" 'newline-and-indent)))
 
 ;; ruby-mode
 (add-to-list 'auto-mode-alist
@@ -244,24 +268,27 @@
 (add-hook 'ruby-mode-hook
           (lambda()
             (local-set-key "\r" 'newline-and-indent)
-            (flymake-ruby-load)))
+            (flymake-ruby-load)
+            (devel-modes-hook)))
+
+;; yaml-mode
+(require 'yaml-mode)
+(add-to-list 'auto-mode-alist '("\\.ya?ml$" . yaml-mode))
+(add-hook 'yaml-mode-hook
+	  (lambda ()
+	    (define-key yaml-mode-map "\C-m" 'newline-and-indent)
+      (devel-modes-hook)))
 
 ;; markdown-mode
 (require 'markdown-mode)
 (add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
+(add-hook 'markdown-mode-hook 'devel-modes-hook)
 
 ;; theme
 ;;(load-theme 'gotham t)
 ;(load-theme 'sanityinc-tomorrow-night t)
 ;(load-theme 'zenburn t)
 (load-theme 'obsidian t)
-
-;; diff-hl
-(diff-hl-mode t)
-;; line mode
-(hl-line-mode t)
-;; line numbers
-(linum-mode t)
 
 ;; Mac: exec-path-from-shell-initialize
 ;; Setup environment variables from the user's shell.
