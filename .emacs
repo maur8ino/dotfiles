@@ -71,6 +71,8 @@
    coffee-mode
    ;; php stuff
    php-mode
+   ;; toml stuff
+   toml-mode
    ;; yaml stuff
    yaml-mode
    ;; markdown stuff
@@ -272,6 +274,11 @@
             (local-set-key "\r" 'newline-and-indent)
             (flymake-ruby-load)
             (devel-modes-hook)))
+
+;; toml mode
+(require 'toml-mode)
+(add-to-list 'auto-mode-alist '("\\.toml$\\'" . toml-mode))
+(add-hook 'toml-mode-hook 'devel-modes-hook)
 
 ;; yaml-mode
 (require 'yaml-mode)
