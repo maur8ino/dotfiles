@@ -34,24 +34,26 @@
  '(
    ;; mac specific
    exec-path-from-shell
-   ;; ignore common files
-   ignoramus
-   ace-jump-mode
-   smex
+   ;; project and completion stuff
    projectile
+   helm
+   helm-projectile
+   helm-company
+   ignoramus
+   ;; magit and diff
    magit
    magit-gh-pulls
    diff-hl
-   ido-hacks
-   ido-vertical-mode
-   flx-ido
+   ;; graphical stuff
+   ace-jump-mode
    switch-window
    company
    highlight-indentation
    expand-region
-   browse-kill-ring
-   powerline
    neotree
+   smart-mode-line
+   ;; syntax checking on-fly
+   flycheck
    ;; go
    go-mode
    go-projectile
@@ -79,10 +81,7 @@
    markdown-mode
    ;; themes
    gotham-theme
-   ;;color-theme-sanityinc-tomorrow
-   ;;zenburn-theme
-   obsidian-theme
-   flycheck
+   ;;obsidian-theme
    ))
 
 ;; Package manager and packages handler
@@ -121,11 +120,27 @@
 ;; PACKAGES
 
 ;; ignoramus
-(require 'ignoramus)
 (ignoramus-setup)
 
 ;; projectile
 (projectile-global-mode)
+(setq projectile-completion-system 'helm)
+(helm-projectile-on)
+
+;; helm
+(global-set-key (kbd "C-x b") 'helm-mini)
+(global-set-key (kbd "M-x") 'helm-M-x)
+(global-set-key (kbd "M-y") 'helm-show-kill-ring)
+(global-set-key (kbd "C-x C-f") 'helm-find-files)
+;; definitions
+(define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action) ; rebind tab to do persistent action
+(define-key helm-map (kbd "C-i") 'helm-execute-persistent-action) ; make TAB works in terminal
+(define-key helm-map (kbd "C-z")  'helm-select-action) ; list actions using C-z
+;; fuzzy matching everywhere
+(setq helm-buffers-fuzzy-matching t
+      helm-recentf-fuzzy-match t
+      helm-M-x-fuzzy-match t)
+(helm-autoresize-mode t)
 
 ;; ace-jump-mode
 (require 'ace-jump-mode)
@@ -135,11 +150,6 @@
 (global-set-key (kbd "C-M-j") 'ace-jump-word-mode)
 (global-set-key (kbd "C-x j") 'ace-jump-char-mode)
   
-;; smex
-(require 'smex)
-(smex-initialize)
-(global-set-key (kbd "M-x") 'smex)
-
 ;; magit
 (global-set-key (kbd "C-c g") 'magit-status)
 (global-set-key (kbd "C-c l") 'magit-log)
@@ -149,13 +159,6 @@
             (turn-on-magit-gh-pulls)
             (setq magit-gh-pulls-collapse-commits t)))
 
-
-;; ido-hacks & ido-vertical-mode
-(require 'ido-hacks)
-(require 'ido-vertical-mode)
-(ido-mode t)
-(ido-vertical-mode t)
-(flx-ido-mode t)
 
 ;; switch-window
 (require 'switch-window)
@@ -169,21 +172,13 @@
 (global-set-key (kbd "ESC <up>") 'er/expand-region)
 (global-set-key (kbd "ESC <down>") 'er/contract-region)
 
-; browse-kill-ring
-(require 'browse-kill-ring)
-(global-set-key (kbd "C-c C-y") 'browse-kill-ring)
-(setq browse-kill-ring-quit-action 'save-and-restore)
-
-;; powerline
-(require 'powerline)
-(setq powerline-arrow-shape 'arrow)   ;; the default
-(setq powerline-arrow-shape 'curve)   ;; give your mode-line curves
-(setq powerline-arrow-shape 'arrow14)
-(powerline-default-theme)
-
 ;; neotree
 (require 'neotree)
 (global-set-key (kbd "C-c n") 'neotree-toggle)
+
+;; smart-line-mode
+(sml/setup)
+(sml/apply-theme 'automatic)
 
 ;; flycheck
 (add-hook 'after-init-hook #'global-flycheck-mode)
@@ -222,9 +217,7 @@
 (require 'js2-mode)
 ;; js2-mode for *.js, *.jsx and *.json
 (add-to-list 'auto-mode-alist '("\\.jsx?\\'" . js2-mode))
-(add-to-list 'auto-mode-alist '("\\.json$" . js-mode))
-;; tabs are 2 chars in js2
-(add-hook 'js-mode-hook 'js2-minor-mode)
+(add-to-list 'auto-mode-alist '("\\.json$" . js2-mode))
 (add-hook 'js2-mode-hook
           (lambda ()
             (setq-default indent-tabs-mode nil
@@ -243,17 +236,16 @@
 (setq-default js2-strict-trailing-comma-warning t)
 
 ;; (s)css-mode
-(add-to-list 'auto-mode-alist '("\\.scss\\'" . scss-mode))
 (add-hook 'css-mode-hook
           (lambda ()
             (setq indent-tabs-mode nil
-                  css-basic-offset 2)
+                  css-indent-offset 2)
             (devel-modes-hook)))
 
 (add-hook 'scss-mode-hook
           (lambda ()
             (setq indent-tabs-mode nil
-                  tab-width 2))
+                  css-indent-offset 2))
             (devel-modes-hook))
 
 ;; php-mode
@@ -294,10 +286,8 @@
 (add-hook 'markdown-mode-hook 'devel-modes-hook)
 
 ;; theme
-;;(load-theme 'gotham t)
-;(load-theme 'sanityinc-tomorrow-night t)
-;(load-theme 'zenburn t)
-(load-theme 'obsidian t)
+(load-theme 'gotham t)
+;;(load-theme 'obsidian t)
 
 ;; Mac: exec-path-from-shell-initialize
 ;; Setup environment variables from the user's shell.
