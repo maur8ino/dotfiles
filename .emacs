@@ -40,6 +40,7 @@
    helm-projectile
    helm-company
    ignoramus
+   ag
    ;; magit and diff
    magit
    magit-gh-pulls
@@ -54,16 +55,19 @@
    smart-mode-line
    ;; syntax checking on-fly
    flycheck
+   ;; yasnippet
+   yasnippet
    ;; go
    go-mode
    go-projectile
+   go-autocomplete
    ;; template stuff
    web-mode
    web-beautify
    ;; javascript stuff
-   ac-js2
    js2-mode
    js2-refactor
+   ac-js2
    react-snippets
    ;; css, sass & scss
    css-mode
@@ -77,6 +81,8 @@
    toml-mode
    ;; yaml stuff
    yaml-mode
+   ;; ruby mode
+   robe
    ;; markdown stuff
    markdown-mode
    ;; themes
@@ -125,7 +131,28 @@
 ;; projectile
 (projectile-global-mode)
 (setq projectile-completion-system 'helm)
+;; ignore common temporary directories
+(setq projectile-globally-ignored-directories
+      (append projectile-globally-ignored-directories
+	      '("node_modules" "bower_components" ".bower-cache" "public/assets" "tmp")))
+
 (helm-projectile-on)
+
+;; yasnippet
+;; should be loaded before auto complete so that they can work together
+(require 'yasnippet)
+(yas-global-mode 1)
+
+;;; auto complete mod
+;;; should be loaded after yasnippet so that they can work together
+(require 'auto-complete-config)
+(add-to-list 'ac-dictionary-directories "~/.emacs.d/ac-dict")
+(ac-config-default)
+;;; set the trigger key so that it can work together with yasnippet on tab key,
+;;; if the word exists in yasnippet, pressing tab will cause yasnippet to
+;;; activate, otherwise, auto-complete will
+(ac-set-trigger-key "TAB")
+(ac-set-trigger-key "<tab>")
 
 ;; helm
 (global-set-key (kbd "C-x b") 'helm-mini)
@@ -215,6 +242,7 @@
 
 ;; js2-mode
 (require 'js2-mode)
+(require 'react-snippets)
 ;; js2-mode for *.js, *.jsx and *.json
 (add-to-list 'auto-mode-alist '("\\.jsx?\\'" . js2-mode))
 (add-to-list 'auto-mode-alist '("\\.json$" . js2-mode))
@@ -223,7 +251,9 @@
             (setq-default indent-tabs-mode nil
                           tab-width 2)
             (ac-js2-mode)
+            (js2-imenu-extras-mode)
             (devel-modes-hook)))
+(setq ac-js2-evaluate-calls t)
 
 (setq-default js2-basic-offset 2)
 ;; set highlight level
@@ -265,7 +295,10 @@
           (lambda()
             (local-set-key "\r" 'newline-and-indent)
             (flymake-ruby-load)
-            (devel-modes-hook)))
+            (devel-modes-hook)
+	    (robe-mode)))
+(eval-after-load 'company
+  '(push 'company-robe company-backends))
 
 ;; toml mode
 (require 'toml-mode)
