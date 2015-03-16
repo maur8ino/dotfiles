@@ -83,6 +83,7 @@
    yaml-mode
    ;; ruby mode
    robe
+   rubocop
    ;; markdown stuff
    markdown-mode
    ;; themes
@@ -287,6 +288,7 @@
 
 
 ;; ruby-mode
+(require 'rubocop)
 (add-to-list 'auto-mode-alist
              '("\\.\\(?:gemspec\\|irbrc\\|gemrc\\|rake\\|rb\\|ru\\|thor\\)\\'" . ruby-mode))
 (add-to-list 'auto-mode-alist
@@ -296,7 +298,9 @@
             (local-set-key "\r" 'newline-and-indent)
             (flymake-ruby-load)
             (devel-modes-hook)
-	    (robe-mode)))
+            (robe-mode))
+            (rubocop-mode))
+
 (eval-after-load 'company
   '(push 'company-robe company-backends))
 
