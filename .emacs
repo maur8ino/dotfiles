@@ -16,9 +16,9 @@
 (setq backup-directory-alist `(("." . "~/.saves")))
 (setq backup-by-copying t)
 (setq delete-old-versions t
-  kept-new-versions 6
-  kept-old-versions 2
-  version-control t)
+      kept-new-versions 6
+      kept-old-versions 2
+      version-control t)
 
 ;; shorter yes-no-dialogs
 (fset 'yes-or-no-p 'y-or-n-p)
@@ -41,6 +41,7 @@
    helm-company
    ignoramus
    ag
+   whitespace
    ;; magit and diff
    magit
    magit-gh-pulls
@@ -102,13 +103,13 @@
   (package-initialize)
   (let ((need-refresh nil))
     (mapc (lambda (package-name)
-	    (unless (package-installed-p package-name)
-	      (set 'need-refresh t))) wanted-packages)
+            (unless (package-installed-p package-name)
+              (set 'need-refresh t))) wanted-packages)
     (if need-refresh
-	(package-refresh-contents)))
+        (package-refresh-contents)))
   (mapc (lambda (package-name)
-	  (unless (package-installed-p package-name)
-	    (package-install package-name))) wanted-packages)
+          (unless (package-installed-p package-name)
+            (package-install package-name))) wanted-packages)
   )
 
 ;; Devel text modes mode
@@ -135,7 +136,7 @@
 ;; ignore common temporary directories
 (setq projectile-globally-ignored-directories
       (append projectile-globally-ignored-directories
-	      '("node_modules" "bower_components" ".bower-cache" "public/assets" "tmp")))
+              '("node_modules" "bower_components" ".bower-cache" "public/assets" "tmp")))
 
 (helm-projectile-on)
 
@@ -177,9 +178,9 @@
 (global-set-key (kbd "C-x C-j") 'ace-jump-word-mode)
 (global-set-key (kbd "C-M-j") 'ace-jump-word-mode)
 (global-set-key (kbd "C-x j") 'ace-jump-char-mode)
-  
+
 ;; magit
-(global-set-key (kbd "C-c g") 'magit-status)
+(global-set-key (kbd "C-x g") 'magit-status)
 (global-set-key (kbd "C-c l") 'magit-log)
 (global-set-key (kbd "C-c o") 'magit-checkout)
 (add-hook 'magit-mode-hook
@@ -199,6 +200,9 @@
 (require 'expand-region)
 (global-set-key (kbd "ESC <up>") 'er/expand-region)
 (global-set-key (kbd "ESC <down>") 'er/contract-region)
+
+;; whitespace
+(require 'whitespace)
 
 ;; neotree
 (require 'neotree)
@@ -220,6 +224,7 @@
 
 ;; web-mode
 (require 'web-mode)
+(require 'react-snippets)
 (add-to-list 'auto-mode-alist '("\\.phtml\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.tpl\\.php\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.[agj]sp\\'" . web-mode))
@@ -232,21 +237,21 @@
 ;; using web-mode with handlebars also
 (add-to-list 'auto-mode-alist '("\\.handlebars$" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.hbs$" . web-mode))
+;; web-mode for *.js, *.jsx and *.json
+(add-to-list 'auto-mode-alist '("\\.jsx?\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.json$" . web-mode))
 (add-hook 'web-mode-hook
           (lambda ()
             (setq web-mode-markup-indent-offset 2
                   web-mode-css-indent-offset 2
                   web-mode-code-indent-offset 2
                   web-mode-enable-current-element-highlight t
-		  web-mode-enable-current-column-highlight t)
+                  web-mode-enable-current-column-highlight t)
+            (js2-minor-mode t)
             (devel-modes-hook)))
 
 ;; js2-mode
 (require 'js2-mode)
-(require 'react-snippets)
-;; js2-mode for *.js, *.jsx and *.json
-(add-to-list 'auto-mode-alist '("\\.jsx?\\'" . js2-mode))
-(add-to-list 'auto-mode-alist '("\\.json$" . js2-mode))
 (add-hook 'js2-mode-hook
           (lambda ()
             (setq-default indent-tabs-mode nil
@@ -277,7 +282,7 @@
           (lambda ()
             (setq indent-tabs-mode nil
                   css-indent-offset 2))
-            (devel-modes-hook))
+          (devel-modes-hook))
 
 ;; php-mode
 (require 'php-mode)
@@ -299,7 +304,7 @@
             (flymake-ruby-load)
             (devel-modes-hook)
             (robe-mode))
-            (rubocop-mode))
+          (rubocop-mode))
 
 (eval-after-load 'company
   '(push 'company-robe company-backends))
@@ -313,9 +318,9 @@
 (require 'yaml-mode)
 (add-to-list 'auto-mode-alist '("\\.ya?ml$" . yaml-mode))
 (add-hook 'yaml-mode-hook
-	  (lambda ()
-	    (define-key yaml-mode-map "\C-m" 'newline-and-indent)
-      (devel-modes-hook)))
+          (lambda ()
+            (define-key yaml-mode-map "\C-m" 'newline-and-indent)
+            (devel-modes-hook)))
 
 ;; markdown-mode
 (require 'markdown-mode)
@@ -345,7 +350,7 @@
 
   ;; Move to trash when deleting stuff
   (setq delete-by-moving-to-trash t
-	trash-directory "~/.Trash/emacs")
+        trash-directory "~/.Trash/emacs")
 
   ;; Ignore .DS_Store files with ido mode
   (add-to-list 'ido-ignore-files "\\.DS_Store"))
