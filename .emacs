@@ -12,6 +12,18 @@
 ;; enable narrowing
 (put 'narrow-to-region 'disabled nil)
 
+;; Newline at end of file
+(setq require-final-newline t)
+
+;; delete the selection with a keypress
+(delete-selection-mode t)
+
+;; revert buffers automatically when underlying files are changed externally
+(global-auto-revert-mode t)
+
+;; smart tab behavior - indent or complete
+(setq tab-always-indent 'complete)
+
 ;; backups in .saves
 (setq backup-directory-alist `(("." . "~/.saves")))
 (setq backup-by-copying t)
@@ -34,6 +46,12 @@
  '(
    ;; mac specific
    exec-path-from-shell
+   ;; editor stuff
+   whitespace
+   whitespace-cleanup-mode
+   smartparens
+   diff-hl
+   anzu
    ;; project and completion stuff
    projectile
    helm
@@ -41,11 +59,9 @@
    helm-company
    ignoramus
    ag
-   whitespace
    ;; magit and diff
    magit
    magit-gh-pulls
-   diff-hl
    ;; graphical stuff
    ace-jump-mode
    switch-window
@@ -66,9 +82,6 @@
    web-mode
    web-beautify
    ;; javascript stuff
-   js2-mode
-   js2-refactor
-   ac-js2
    react-snippets
    ;; css, sass & scss
    css-mode
@@ -120,12 +133,37 @@
   ;; line mode
   (hl-line-mode t)
   ;; line numbers
-  (linum-mode t))
+  (linum-mode t)
+  ;; whitespace
+  (whitespace-mode +1)
+  (whitespace-cleanup-mode t))
 
 ;; Install wanted packages
 (install-wanted-packages)
 
 ;; PACKAGES
+
+;; smartparens
+;; smart pairing for all
+(require 'smartparens-config)
+(setq sp-base-key-bindings 'paredit)
+(setq sp-autoskip-closing-pair 'always)
+(setq sp-hybrid-kill-entire-symbol nil)
+(sp-use-paredit-bindings)
+
+(show-smartparens-global-mode +1)
+
+;; anzu-mode enhances isearch & query-replace by showing total matches and current match position
+(require 'anzu)
+(global-anzu-mode)
+
+(global-set-key (kbd "M-%") 'anzu-query-replace)
+(global-set-key (kbd "C-M-%") 'anzu-query-replace-regexp)
+
+;; whitespace-mode config
+(require 'whitespace)
+(setq whitespace-line-column 80) ;; limit line length
+(setq whitespace-style '(face tabs empty trailing lines-tail))
 
 ;; ignoramus
 (ignoramus-setup)
@@ -201,9 +239,6 @@
 (global-set-key (kbd "ESC <up>") 'er/expand-region)
 (global-set-key (kbd "ESC <down>") 'er/contract-region)
 
-;; whitespace
-(require 'whitespace)
-
 ;; neotree
 (require 'neotree)
 (global-set-key (kbd "C-c n") 'neotree-toggle)
@@ -249,27 +284,6 @@
                   web-mode-enable-current-column-highlight t)
             (js2-minor-mode t)
             (devel-modes-hook)))
-
-;; js2-mode
-(require 'js2-mode)
-(add-hook 'js2-mode-hook
-          (lambda ()
-            (setq-default indent-tabs-mode nil
-                          tab-width 2)
-            (ac-js2-mode)
-            (js2-imenu-extras-mode)
-            (devel-modes-hook)))
-(setq ac-js2-evaluate-calls t)
-
-(setq-default js2-basic-offset 2)
-;; set highlight level
-(setq-default js2-highlight-level 2)
-;; mirror mode off
-(setq-default js2-mirror-mode nil)
-;; Let flycheck handle parse errors
-(setq-default js2-show-parse-errors nil)
-(setq-default js2-strict-missing-semi-warning nil)
-(setq-default js2-strict-trailing-comma-warning t)
 
 ;; (s)css-mode
 (add-hook 'css-mode-hook
