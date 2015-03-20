@@ -258,6 +258,9 @@
 (add-hook 'before-save-hook 'gofmt-before-save)
 
 ;; web-mode
+(setq web-mode-enable-current-element-highlight t
+      web-mode-enable-current-column-highlight t)
+
 (require 'web-mode)
 (require 'react-snippets)
 (add-to-list 'auto-mode-alist '("\\.phtml\\'" . web-mode))
@@ -275,13 +278,12 @@
 ;; web-mode for *.js, *.jsx and *.json
 (add-to-list 'auto-mode-alist '("\\.jsx?\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.json$" . web-mode))
+
 (add-hook 'web-mode-hook
           (lambda ()
-            (setq web-mode-markup-indent-offset 2
-                  web-mode-css-indent-offset 2
-                  web-mode-code-indent-offset 2
-                  web-mode-enable-current-element-highlight t
-                  web-mode-enable-current-column-highlight t)
+	    (setq web-mode-markup-indent-offset 2
+		  web-mode-css-indent-offset 2
+		  web-mode-code-indent-offset 2)
             (js2-minor-mode t)
             (devel-modes-hook)))
 
