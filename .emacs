@@ -103,7 +103,8 @@
    markdown-mode
    ;; themes
    gotham-theme
-   ;;obsidian-theme
+   obsidian-theme
+   solarized-theme
    ))
 
 ;; Package manager and packages handler
@@ -244,10 +245,6 @@
 (require 'neotree)
 (global-set-key (kbd "C-c n") 'neotree-toggle)
 
-;; smart-line-mode
-(sml/setup)
-(sml/apply-theme 'automatic)
-
 ;; flycheck
 (add-hook 'after-init-hook #'global-flycheck-mode)
 
@@ -277,7 +274,7 @@
 (add-to-list 'auto-mode-alist '("\\.handlebars$" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.hbs$" . web-mode))
 ;; web-mode for *.js, *.jsx and *.json
-(add-to-list 'auto-mode-alist '("\\.jsx$\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.jsx$" . web-mode))
 
 (add-hook 'web-mode-hook
           (lambda ()
@@ -290,7 +287,7 @@
 ;; js2-mode
 (require 'js2-mode)
 ;; js2-mode for *.js, *.jsx and *.json
-(add-to-list 'auto-mode-alist '("\\.js$\\'" . js2-mode))
+(add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
 (add-to-list 'auto-mode-alist '("\\.json$" . js2-mode))
 (add-hook 'js2-mode-hook
           (lambda ()
@@ -367,10 +364,6 @@
 (add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
 (add-hook 'markdown-mode-hook 'devel-modes-hook)
 
-;; theme
-(load-theme 'gotham t)
-;;(load-theme 'obsidian t)
-
 ;; Mac: exec-path-from-shell-initialize
 ;; Setup environment variables from the user's shell.
 (when is-mac
@@ -394,6 +387,17 @@
 
   ;; Ignore .DS_Store files with ido mode
   (add-to-list 'ido-ignore-files "\\.DS_Store"))
+
+;; theme
+;;(load-theme 'gotham t)
+;;(load-theme 'obsidian t)
+;; make the modeline high contrast
+(load-theme 'solarized-dark t)
+
+;; smart-line-mode
+(setq sml/mode-width 'full)
+(sml/setup)
+(sml/apply-theme 'automatic)
 
 (provide '.emacs)
 ;;; .emacs ends here
