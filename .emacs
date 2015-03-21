@@ -80,6 +80,9 @@
    web-mode
    web-beautify
    ;; javascript stuff
+   js2-mode
+   js2-refactor
+   ac-js2
    react-snippets
    ;; css, sass & scss
    css-mode
@@ -274,8 +277,7 @@
 (add-to-list 'auto-mode-alist '("\\.handlebars$" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.hbs$" . web-mode))
 ;; web-mode for *.js, *.jsx and *.json
-(add-to-list 'auto-mode-alist '("\\.jsx?\\'" . web-mode))
-(add-to-list 'auto-mode-alist '("\\.json$" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.jsx$\\'" . web-mode))
 
 (add-hook 'web-mode-hook
           (lambda ()
@@ -284,6 +286,30 @@
                   web-mode-code-indent-offset 2)
             (js2-minor-mode t)
             (devel-modes-hook)))
+
+;; js2-mode
+(require 'js2-mode)
+;; js2-mode for *.js, *.jsx and *.json
+(add-to-list 'auto-mode-alist '("\\.js$\\'" . js2-mode))
+(add-to-list 'auto-mode-alist '("\\.json$" . js2-mode))
+(add-hook 'js2-mode-hook
+          (lambda ()
+            (setq-default indent-tabs-mode nil
+                          tab-width 2)
+            (ac-js2-mode)
+            (js2-imenu-extras-mode)
+            (devel-modes-hook)))
+(setq ac-js2-evaluate-calls t)
+
+(setq-default js2-basic-offset 2)
+;; set highlight level
+(setq-default js2-highlight-level 2)
+;; mirror mode off
+(setq-default js2-mirror-mode nil)
+;; Let flycheck handle parse errors
+(setq-default js2-show-parse-errors nil)
+(setq-default js2-strict-missing-semi-warning nil)
+(setq-default js2-strict-trailing-comma-warning t)
 
 ;; (s)css-mode
 (add-hook 'css-mode-hook
