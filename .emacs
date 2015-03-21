@@ -11,16 +11,14 @@
 
 ;; enable narrowing
 (put 'narrow-to-region 'disabled nil)
-
 ;; Newline at end of file
 (setq require-final-newline t)
-
 ;; delete the selection with a keypress
 (delete-selection-mode t)
-
 ;; revert buffers automatically when underlying files are changed externally
 (global-auto-revert-mode t)
-
+;; don't use tabs to indent
+(setq-default indent-tabs-mode nil)
 ;; smart tab behavior - indent or complete
 (setq tab-always-indent 'complete)
 
@@ -281,9 +279,9 @@
 
 (add-hook 'web-mode-hook
           (lambda ()
-	    (setq web-mode-markup-indent-offset 2
-		  web-mode-css-indent-offset 2
-		  web-mode-code-indent-offset 2)
+            (setq web-mode-markup-indent-offset 2
+                  web-mode-css-indent-offset 2
+                  web-mode-code-indent-offset 2)
             (js2-minor-mode t)
             (devel-modes-hook)))
 
