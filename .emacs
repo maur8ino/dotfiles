@@ -9,6 +9,12 @@
 ;; no scroll bars
 (scroll-bar-mode 0)
 
+;; the blinking cursor is nothing, but an annoyance
+(blink-cursor-mode -1)
+
+;; disable startup screen
+(setq inhibit-startup-screen t)
+
 ;; enable narrowing
 (put 'narrow-to-region 'disabled nil)
 ;; Newline at end of file
@@ -142,6 +148,14 @@
 
 ;; Install wanted packages
 (install-wanted-packages)
+
+;; dired
+(require 'dired)
+(define-key dired-mode-map (kbd "RET") 'dired-find-alternate-file) ; was dired-advertised-find-file
+(define-key dired-mode-map (kbd "^") (lambda () (interactive) (find-alternate-file "..")))  ; was dired-up-directory
+;; allow dired to be able to delete or copy a whole dir.
+(setq dired-recursive-copies (quote always)) ; “always” means no asking
+(setq dired-recursive-deletes (quote top)) ; “top” means ask once
 
 ;; PACKAGES
 
