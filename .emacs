@@ -65,7 +65,8 @@
    ag
    ;; magit and diff
    magit
-   magit-gh-pulls
+   ;;magit-gh-pulls
+   git-timemachine
    ;; graphical stuff
    ace-jump-mode
    switch-window
@@ -82,7 +83,7 @@
    go-mode
    go-projectile
    go-autocomplete
-   ;; template stuff
+   ;; web mode
    web-mode
    web-beautify
    ;; javascript stuff
@@ -107,6 +108,12 @@
    rubocop
    ;; markdown stuff
    markdown-mode
+   ;; elixir stuff
+   alchemist
+   elixir-mode
+   elixir-yasnippets
+   ;; dockerfile-mode
+   dockerfile-mode
    ;; themes
    gotham-theme
    obsidian-theme
@@ -151,8 +158,11 @@
 
 ;; dired
 (require 'dired)
-(define-key dired-mode-map (kbd "RET") 'dired-find-alternate-file) ; was dired-advertised-find-file
-(define-key dired-mode-map (kbd "^") (lambda () (interactive) (find-alternate-file "..")))  ; was dired-up-directory
+(put 'dired-find-alternate-file 'disabled nil)
+;; was dired-advertised-find-file
+(define-key dired-mode-map (kbd "RET") 'dired-find-alternate-file)
+;; was dired-up-directory
+(define-key dired-mode-map (kbd "^") (lambda () (interactive) (find-alternate-file "..")))
 ;; allow dired to be able to delete or copy a whole dir.
 (setq dired-recursive-copies (quote always)) ; “always” means no asking
 (setq dired-recursive-deletes (quote top)) ; “top” means ask once
@@ -207,8 +217,8 @@
 ;;; set the trigger key so that it can work together with yasnippet on tab key,
 ;;; if the word exists in yasnippet, pressing tab will cause yasnippet to
 ;;; activate, otherwise, auto-complete will
-(ac-set-trigger-key "TAB")
-(ac-set-trigger-key "<tab>")
+;;(ac-set-trigger-key "TAB")
+;;(ac-set-trigger-key "<tab>")
 
 ;; helm
 (global-set-key (kbd "C-x b") 'helm-mini)
@@ -225,6 +235,9 @@
       helm-M-x-fuzzy-match t)
 (helm-autoresize-mode t)
 
+;; git-timemachine
+(global-set-key (kbd "C-x t") 'git-timemachine-toggle)
+
 ;; ace-jump-mode
 (require 'ace-jump-mode)
 (eval-when-compile
@@ -237,11 +250,10 @@
 (global-set-key (kbd "C-x g") 'magit-status)
 (global-set-key (kbd "C-c l") 'magit-log)
 (global-set-key (kbd "C-c o") 'magit-checkout)
-(add-hook 'magit-mode-hook
-          (lambda ()
-            (turn-on-magit-gh-pulls)
-            (setq magit-gh-pulls-collapse-commits t)))
-
+;;(add-hook 'magit-mode-hook
+;;          (lambda ()
+;;            (turn-on-magit-gh-pulls)
+;;            (setq magit-gh-pulls-collapse-commits t)))
 
 ;; switch-window
 (require 'switch-window)
@@ -267,6 +279,7 @@
 
 ;; go-mode
 (require 'go-mode)
+(require 'go-autocomplete)
 (add-hook 'before-save-hook 'gofmt-before-save)
 
 ;; web-mode
@@ -288,7 +301,8 @@
 (add-to-list 'auto-mode-alist '("\\.handlebars$" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.hbs$" . web-mode))
 ;; web-mode for *.js, *.jsx and *.json
-(add-to-list 'auto-mode-alist '("\\.jsx$" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.jsx?" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.json$" . web-mode))
 
 (add-hook 'web-mode-hook
           (lambda ()
@@ -298,29 +312,8 @@
             (js2-minor-mode t)
             (devel-modes-hook)))
 
-;; js2-mode
-(require 'js2-mode)
-;; js2-mode for *.js, *.jsx and *.json
-(add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
-(add-to-list 'auto-mode-alist '("\\.json$" . js2-mode))
-(add-hook 'js2-mode-hook
-          (lambda ()
-            (setq-default indent-tabs-mode nil
-                          tab-width 2)
-            (ac-js2-mode)
-            (js2-imenu-extras-mode)
-            (devel-modes-hook)))
-(setq ac-js2-evaluate-calls t)
-
-(setq-default js2-basic-offset 2)
-;; set highlight level
-(setq-default js2-highlight-level 2)
-;; mirror mode off
-(setq-default js2-mirror-mode nil)
-;; Let flycheck handle parse errors
-(setq-default js2-show-parse-errors nil)
-(setq-default js2-strict-missing-semi-warning nil)
-(setq-default js2-strict-trailing-comma-warning t)
+(setq flycheck-disabled-checkers '(javascript-jshint))
+(setq flycheck-checkers '(javascript-eslint))
 
 ;; (s)css-mode
 (add-hook 'css-mode-hook
@@ -354,11 +347,14 @@
             (local-set-key "\r" 'newline-and-indent)
             (flymake-ruby-load)
             (devel-modes-hook)
-            (robe-mode))
-          (rubocop-mode))
+            (robe-mode)
+            (rubocop-mode)
+            (devel-modes-hook)))
 
 (eval-after-load 'company
   '(push 'company-robe company-backends))
+
+(add-hook 'haml-mode-hook 'devel-modes-hook)
 
 ;; toml mode
 (require 'toml-mode)
@@ -377,6 +373,14 @@
 (require 'markdown-mode)
 (add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
 (add-hook 'markdown-mode-hook 'devel-modes-hook)
+
+;; elixir-mode
+(require 'elixir-mode)
+(add-hook 'elixir-mode-hook 'devel-modes-hook)
+
+;; dockerfile-mode
+(require 'dockerfile-mode)
+(add-to-list 'auto-mode-alist '("Dockerfile\\'" . dockerfile-mode))
 
 ;; Mac: exec-path-from-shell-initialize
 ;; Setup environment variables from the user's shell.
