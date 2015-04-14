@@ -82,14 +82,14 @@
    ;; go
    go-mode
    go-projectile
-   go-autocomplete
+   ;;go-autocomplete
    ;; web mode
    web-mode
    web-beautify
    ;; javascript stuff
    js2-mode
    js2-refactor
-   ac-js2
+   ;;ac-js2
    react-snippets
    ;; css, sass & scss
    css-mode
@@ -211,9 +211,9 @@
 
 ;;; auto complete mod
 ;;; should be loaded after yasnippet so that they can work together
-(require 'auto-complete-config)
-(add-to-list 'ac-dictionary-directories "~/.emacs.d/ac-dict")
-(ac-config-default)
+;;(require 'auto-complete-config)
+;;(add-to-list 'ac-dictionary-directories "~/.emacs.d/ac-dict")
+;;(ac-config-default)
 ;;; set the trigger key so that it can work together with yasnippet on tab key,
 ;;; if the word exists in yasnippet, pressing tab will cause yasnippet to
 ;;; activate, otherwise, auto-complete will
@@ -225,6 +225,7 @@
 (global-set-key (kbd "M-x") 'helm-M-x)
 (global-set-key (kbd "M-y") 'helm-show-kill-ring)
 (global-set-key (kbd "C-x C-f") 'helm-find-files)
+(global-set-key (kbd "C-x r") 'helm-recentf)
 ;; definitions
 (define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action) ; rebind tab to do persistent action
 (define-key helm-map (kbd "C-i") 'helm-execute-persistent-action) ; make TAB works in terminal
@@ -279,7 +280,7 @@
 
 ;; go-mode
 (require 'go-mode)
-(require 'go-autocomplete)
+;;(require 'go-autocomplete)
 (add-hook 'before-save-hook 'gofmt-before-save)
 
 ;; web-mode
