@@ -153,6 +153,21 @@
   (whitespace-mode +1)
   (whitespace-cleanup-mode t))
 
+;; Presentation modes
+(defun presentation-modes-hook ()
+  "Activate minor modes for presenting."
+  ;; diff-hl
+  (diff-hl-mode nil)
+  ;; line mode
+  (hl-line-mode t)
+  ;; line numbers
+  (linum-mode nil)
+
+  (when is-mac
+    ;; mac presentation friendly font
+    (when window-system
+      (set-face-attribute 'default nil :font maur8ino/presentation-font))))
+
 ;; Install wanted packages
 (install-wanted-packages)
 
@@ -255,6 +270,7 @@
 ;;          (lambda ()
 ;;            (turn-on-magit-gh-pulls)
 ;;            (setq magit-gh-pulls-collapse-commits t)))
+(setq magit-last-seen-setup-instructions "1.4.0")
 
 ;; switch-window
 (require 'switch-window)
