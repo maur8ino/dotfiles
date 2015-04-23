@@ -326,11 +326,10 @@
             (setq web-mode-markup-indent-offset 2
                   web-mode-css-indent-offset 2
                   web-mode-code-indent-offset 2)
-            (js2-minor-mode t)
             (devel-modes-hook)))
 
-(setq flycheck-disabled-checkers '(javascript-jshint))
-(setq flycheck-checkers '(javascript-eslint))
+;;(setq flycheck-disabled-checkers '(javascript-jshint))
+;;(setq flycheck-checkers '(javascript-eslint))
 
 ;; (s)css-mode
 (add-hook 'css-mode-hook
