@@ -60,7 +60,6 @@
    projectile
    helm
    helm-projectile
-   helm-company
    ignoramus
    ag
    ;; magit and diff
@@ -70,7 +69,6 @@
    ;; graphical stuff
    ace-jump-mode
    switch-window
-   company
    highlight-indentation
    expand-region
    neotree
@@ -276,9 +274,6 @@
 (require 'switch-window)
 (global-set-key (kbd "C-x C-o") 'switch-window)
 
-;; company-mode
-(add-hook 'after-init-hook 'global-company-mode)
-
 ;; expand-region
 (require 'expand-region)
 (global-set-key (kbd "ESC <up>") 'er/expand-region)
@@ -366,9 +361,6 @@
             (robe-mode)
             (rubocop-mode)
             (devel-modes-hook)))
-
-(eval-after-load 'company
-  '(push 'company-robe company-backends))
 
 (add-hook 'haml-mode-hook 'devel-modes-hook)
 
