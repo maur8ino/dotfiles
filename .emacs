@@ -112,6 +112,8 @@
    elixir-yasnippets
    ;; dockerfile-mode
    dockerfile-mode
+   ;; feature-mode
+   feature-mode
    ;; themes
    gotham-theme
    obsidian-theme
@@ -287,12 +289,24 @@
 (add-hook 'after-init-hook #'global-flycheck-mode)
 
 ;; lisp-mode
-(add-hook 'lisp-mode 'devel-modes-hook)
+(add-hook 'lisp-mode-hook 'devel-modes-hook)
 
 ;; go-mode
 (require 'go-mode)
 ;;(require 'go-autocomplete)
-(add-hook 'before-save-hook 'gofmt-before-save)
+(add-hook 'go-mode-hook
+          (lambda ()
+            ;; Use goimports instead of go-fmt
+            (setq gofmt-command "goimports")
+            ;; Call Gofmt before saving
+            (add-hook 'before-save-hook 'gofmt-before-save)
+            ;; Customize compile command to run go build
+            (if (not (string-match "go" compile-command))
+                (set (make-local-variable 'compile-command)
+                     "go build -v && go test -v && go vet"))
+            ;; Godef jump key binding
+            (local-set-key (kbd "M-.") 'godef-jump)
+            (devel-modes-hook)))
 
 ;; web-mode
 (setq web-mode-enable-current-element-highlight t
@@ -389,6 +403,10 @@
 ;; dockerfile-mode
 (require 'dockerfile-mode)
 (add-to-list 'auto-mode-alist '("Dockerfile\\'" . dockerfile-mode))
+
+;; feature-mode
+(require 'feature-mode)
+(add-hook 'feature-mode-hook 'devel-modes-hook)
 
 ;; Mac: exec-path-from-shell-initialize
 ;; Setup environment variables from the user's shell.
