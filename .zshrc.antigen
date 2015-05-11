@@ -52,7 +52,7 @@ export NVM_DIR=~/.nvm
 source $(brew --prefix nvm)/nvm.sh
 
 # Setting editor
-export EDITOR="$(which emacs)"
+export EDITOR="$(which emacsclient) -c"
 
 # Specify your defaults in this environment variable
 export HOMEBREW_CASK_OPTS="--appdir=/Applications"
