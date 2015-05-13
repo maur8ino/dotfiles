@@ -89,6 +89,9 @@
    js2-refactor
    ac-js2
    react-snippets
+   ;; typescript
+   typescript
+   tss
    ;; css, sass & scss
    css-mode
    scss-mode
@@ -339,6 +342,22 @@
 
 ;;(setq flycheck-disabled-checkers '(javascript-jshint))
 ;;(setq flycheck-checkers '(javascript-eslint))
+
+;; typescript-mode
+(require 'typescript)
+(add-to-list 'auto-mode-alist '("\\.tss\\'" . typescript-mode))
+(add-hook 'typescript-mode-hook
+          (lambda ()
+            (setq typescript-indent-level 2)
+            (devel-modes-hook)))
+
+(require 'tss)
+;; Key binding
+(setq tss-popup-help-key "C-:")
+(setq tss-jump-to-definition-key "C->")
+(setq tss-implement-definition-key "C-c i")
+;; Do setting recommemded configuration
+(tss-config-default)
 
 ;; (s)css-mode
 (add-hook 'css-mode-hook
