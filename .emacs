@@ -51,7 +51,8 @@
    ;; mac specific
    exec-path-from-shell
    ;; editor stuff
-   whitespace
+   popup
+   auto-complete
    whitespace-cleanup-mode
    smartparens
    diff-hl
@@ -59,6 +60,7 @@
    ;; project and completion stuff
    projectile
    helm
+   helm-ag
    helm-projectile
    ignoramus
    ag
@@ -206,7 +208,7 @@
 
 ;; whitespace-mode config
 (require 'whitespace)
-(setq whitespace-line-column 80) ;; limit line length
+(setq whitespace-line-column 120) ;; limit line length
 (setq whitespace-style '(face tabs empty trailing lines-tail))
 
 ;; ignoramus
@@ -232,6 +234,8 @@
 (require 'auto-complete-config)
 (add-to-list 'ac-dictionary-directories "~/.emacs.d/ac-dict")
 (ac-config-default)
+(ac-linum-workaround)
+(ac-flyspell-workaround)
 ;;; set the trigger key so that it can work together with yasnippet on tab key,
 ;;; if the word exists in yasnippet, pressing tab will cause yasnippet to
 ;;; activate, otherwise, auto-complete will
@@ -252,6 +256,11 @@
 (setq helm-buffers-fuzzy-matching t
       helm-recentf-fuzzy-match t
       helm-M-x-fuzzy-match t)
+;; widen buffer name length
+(setq helm-buffer-max-length 40)
+;; makes helm-ag use the platinum searcher
+;;(setq helm-ag-base-command "pt --nocolor --nogroup")
+
 (helm-autoresize-mode t)
 
 ;; git-timemachine
