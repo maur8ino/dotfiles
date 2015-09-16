@@ -57,6 +57,7 @@
    smartparens
    diff-hl
    anzu
+   swiper
    ;; project and completion stuff
    projectile
    helm
@@ -206,6 +207,15 @@
 (global-set-key (kbd "M-%") 'anzu-query-replace)
 (global-set-key (kbd "C-M-%") 'anzu-query-replace-regexp)
 
+;; swiper for search and replace
+(require 'swiper)
+;;(ivy-mode 1)
+;;(setq ivy-use-virtual-buffers t)
+(global-set-key "\C-s" 'swiper)
+(global-set-key "\C-r" 'swiper)
+;;(global-set-key (kbd "C-c C-r") 'ivy-resume)
+;;(global-set-key [f6] 'ivy-resume)
+
 ;; whitespace-mode config
 (require 'whitespace)
 (setq whitespace-line-column 120) ;; limit line length
@@ -282,7 +292,10 @@
 ;;          (lambda ()
 ;;            (turn-on-magit-gh-pulls)
 ;;            (setq magit-gh-pulls-collapse-commits t)))
-(setq magit-last-seen-setup-instructions "1.4.0")
+(setq magit-last-seen-setup-instructions "2.1.0")
+;;(add-to-list 'magit-no-confirm 'stage-all-changes)
+(setq magit-push-always-verify nil)
+(setq magit-revert-buffers "silent")
 
 ;; switch-window
 (require 'switch-window)
