@@ -58,6 +58,7 @@
    diff-hl
    anzu
    swiper
+   editorconfig
    ;; project and completion stuff
    projectile
    helm
@@ -274,6 +275,7 @@
 (helm-autoresize-mode t)
 
 ;; git-timemachine
+(setq git-timemachine-abbreviation-length 8)
 (global-set-key (kbd "C-x t") 'git-timemachine-toggle)
 
 ;; ace-jump-mode
@@ -463,7 +465,7 @@
   ;; mac friendly font
   (when window-system
     (setq maur8ino/default-font "-apple-Menlo-medium-normal-normal-*-12-*-*-*-m-0-iso10646-1")
-    (setq maur8ino/presentation-font "-apple-Menlo-medium-normal-normal-*-18-*-*-*-m-0-iso10646-1")
+    (setq maur8ino/presentation-font "-apple-Menlo-medium-normal-normal-*-24-*-*-*-m-0-iso10646-1")
     (set-face-attribute 'default nil :font maur8ino/default-font))
 
   ;; Move to trash when deleting stuff
