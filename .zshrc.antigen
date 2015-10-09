@@ -52,7 +52,7 @@ export NVM_DIR=~/.nvm
 source $(brew --prefix nvm)/nvm.sh
 
 # Setting editor
-export EDITOR="$(which emacsclient) -c"
+export EDITOR="$(which vi) -c"
 
 # Specify your defaults in this environment variable
 export HOMEBREW_CASK_OPTS="--appdir=/Applications"
@@ -67,6 +67,8 @@ export PATH="$TUNA_HOME:$PATH"
 
 # Emacs
 #alias e='emacsclient -t'
+alias e='vim'
+alias vi='vim'
 #alias ec='emacsclient -c'
 #alias vim='emacsclient -t'
 #alias vi='emacsclient -t'
