@@ -66,11 +66,13 @@ export TUNA_HOME="/Users/maur8ino/projects/Tuna"
 export PATH="$TUNA_HOME:$PATH"
 
 # Emacs
-alias e='emacsclient -t'
-alias ec='emacsclient -c'
-alias vim='emacsclient -t'
-alias vi='emacsclient -t'
+#alias e='emacsclient -t'
+#alias ec='emacsclient -c'
+#alias vim='emacsclient -t'
+#alias vi='emacsclient -t'
 
 # Do not enter command lines into the history list
 # if they are duplicates of the previous event
 setopt histignoredups
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

@@ -1,5 +1,404 @@
-set nocompatible
-" Load vim-plug
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""
+"" This is basically a ripoff of
+"" https://github.com/zeroed/dotfiles/blob/master/vim_vimrc
+"" and
+"" https://github.com/tejo/dotfiles/blob/master/vim/vimrc
+""
+"" big thanks to @zeroed and @tejo :)
+""
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"" => General
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+"" be iMproved, required
+" set nocompatible
+
+"" Firstly, the <Esc> key for leaving insert mode is antiquated
+inoremap jk <ESC>
+
+"" Enable syntax highlighting
+syntax enable
+
+"" Sets how many lines of history VIM has to remember
+set history=700
+
+"" Set to auto read when a file is changed from the outside
+set autoread
+
+"" With a map leader it's possible to do extra key combinations
+"" like <leader>w saves the current file
+let mapleader = ","
+let g:mapleader = ","
+
+" set colorcolumn=80
+
+"" Set utf8 as standard encoding
+set encoding=utf8
+
+"" Use Unix as the standard file type
+set ffs=unix,dos,mac
+
+"" Provide some context when editing
+"" The 'scrolloff' (scroll offset) option determines the minimum number of
+"" screen lines that you would like above and below the cursor. By default,
+"" "'scrolloff' is 0 which means that you can move the cursor to any line in
+"" the window without causing scrolling.
+set scrolloff=3
+
+"" Sometimes it is helpful if your working directory is always the same as
+"" the file you are editing. To achieve this, put the following in your
+"" vimrc:
+
+set autochdir
+
+"" Unfortunately, when this option is set
+"" some plugins may not work correctly if they make assumptions about the
+"" current directory. Sometimes, as an alternative to setting autochdir,
+"" the following command gives better results:
+" autocmd BufEnter * silent! lcd %:p:hj
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"" => Backup files
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" set nobackup
+set backupdir=~/.vim.backup,/tmp
+set directory=~/.vim.backup,/tmp
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"" => Ignore Rubinius, Sass cache files
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+set wildignore=*.swp
+set wildignore+=*/tmp/*,*.so,*.zip
+set wildignore+=tmp/**,*.rbc,.rbx,*.scssc,*.sassc
+set wildignore+=*.so,*.swp,*.zip
+set wildignore+=*/.Trash/**,*.pdf,*.dmg,*/Library/**,*/.rbenv/**
+set wildignore+=*DS_Store*
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"" => Nvim terminal configuration
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+"" http://neovim.io/doc/user/nvim_terminal_emulator.html
+" tnoremap <Esc> <C-\><C-n>
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"" => Packages
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+"" Plug - minimalist Vim Plugin Manager
 if empty(glob("~/.vim/autoload/plug.vim"))
-  execute '!curl -fLo ~/.vim/autoload/plug.vim https://raw.github.com/junegunn/vim-plug/master/plug.vim'
+  execute '!curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
 endif
+
+call plug#begin('~/.vim/plugged')
+
+  "" https://github.com/VundleVim/Vundle.vim
+  "" Vundle, the plug-in manager for Vim
+  " Plug 'vundlevim/vundle.vim'
+
+  "" https://github.com/Raimondi/delimitMate
+  "" Vim plugin, provides insert mode auto-completion for quotes, parens,
+  "" brackets, etc.
+  Plug 'raimondi/delimitmate'
+
+  "" https://github.com/scrooloose/nerdtree
+  "" A tree explorer plugin for vim
+  Plug 'scrooloose/nerdtree'
+
+  "" https://github.com/jistr/vim-nerdtree-tabs
+  "" NERDTree and tabs together in Vim, painlessly
+  Plug 'jistr/vim-nerdtree-tabs'
+
+  "" https://github.com/tpope/vim-fugitive
+  "" fugitive.vim: a Git wrapper so awesome, it should be illegal
+  Plug 'tpope/vim-fugitive'
+
+  "" https://github.com/airblade/vim-gitgutter
+  "" A Vim plugin which shows a git diff in the gutter (sign column) and
+  "" stages/reverts hunks.
+  Plug 'airblade/vim-gitgutter'
+
+  "" http://github.com/bronson/vim-trailing-whitespace
+  "" Highlights trailing whitespace in red and :FixWhitespace to fix it.
+  Plug 'bronson/vim-trailing-whitespace'
+
+  "" https://github.com/mhinz/vim-startify
+  "" A fancy start screen for Vim
+  Plug 'mhinz/vim-startify'
+
+  "" https://github.com/myusuf3/numbers.vim
+  "" numbers.vim is a vim plugin for better line numbers
+  Plug 'myusuf3/numbers.vim'
+
+  "" https://github.com/junegunn/fzf
+  "" A command-line fuzzy finder written in Go
+  "" Plugin outside ~/.vim/plugged with post-update hook
+  Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': 'yes \| ./install' }
+
+  "" https://github.com/Valloric/YouCompleteMe
+  "" A code-completion engine for Vim
+  " Plug 'Valloric/YouCompleteMe', { 'do': function('BuildYCM') }
+  Plug 'Valloric/YouCompleteMe', { 'do': './install.sh --clang-completer' }
+  " Plug 'Valloric/YouCompleteMe'
+
+  "" https://github.com/pangloss/vim-javascript
+  "" JavaScript bundle for vim, this bundle provides syntax and indent plugins.
+  Plug 'pangloss/vim-javascript'
+
+  "" https://github.com/fatih/vim-go
+  "" Go development plugin for Vim
+  Plug 'fatih/vim-go'
+
+
+  "" Colors
+
+  "" https://github.com/w0ng/vim-hybrid
+  "" A dark colour scheme for Vim & gVim
+  Plug 'w0ng/vim-hybrid'
+
+call plug#end()
+
+"" vim-plug it automatically generates help tags for all of your plugins
+"" whenever you run PlugInstall or PlugUpdate.
+"" But you can regenerate help tags only with plug#helptags() function.
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"" => Theme selection
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+let g:hybrid_use_Xresources = 1
+set background=dark
+" let g:solarized_visibility = 'high'
+" let g:solarized_contrast = 'high'
+" colorscheme solarized
+colorscheme hybrid
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"" => Startup
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+"" For multi-pane on startup: |   wincmd w
+autocmd VimEnter *
+      \   if !argc()
+      \ |   Startify
+      \ | endif
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"" => Startify configuration
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+let g:startify_session_dir = '~/.vim/session'
+let g:startify_list_order = ['files', 'dir', 'bookmarks', 'sessions']
+" let g:startify_bookmarks = [
+"    \  '~/Workspaces',
+"    \  '~/Workspaces/go.sources/src/github.com/zeroed/',
+"    \  '~/Workspaces/gildsource',
+"    \  '~/Downloads'
+"    \  ]
+
+let g:startify_list_order = [
+  \ ['   Recently used files'],
+  \ 'files',
+  \ ['   Recently used files in the current directory:'],
+  \ 'dir',
+  \ ['   Sessions:'],
+  \ 'sessions',
+  \ ['   Bookmarks:'],
+  \ 'bookmarks',
+  \ ]
+
+let g:startify_change_to_dir = 0
+autocmd User Startified setlocal buftype=
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"" => NerdTree configuration
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+"" If set to 1 then a double click on a node is required to open it.
+"" If set to 2 then a single click will open directory nodes, while a double
+"" click will still be required for file nodes.
+"" If set to 3 then a single click will open any node.
+let NERDTreeMouseMode=2
+
+map - :NERDTreeTabsToggle<CR>
+
+let g:nerdtree_tabs_open_on_console_startup=1
+let g:nerdtree_tabs_focus_on_files=1
+let g:nerdtree_tabs_startup_cd=0
+
+"" open NERDTree when vim starts up if no files were specified
+" autocmd StdinReadPre * let s:std_in=1
+" autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+
+let NERDTreeIgnore=['\.swp$', '\.DS_Store']
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"" => Text, tab and indent related
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+"" Use spaces instead of tabs
+set expandtab
+
+"" Be smart when using tabs ;)
+set smarttab
+
+"" An autoindent (with <<) is 2 spaces
+set shiftwidth=2
+
+"" A tab is 2 spaces
+set tabstop=2
+
+"" Set Linebreak on 500 characters
+set linebreak
+
+"" Set textwidth
+set textwidth=72
+
+"" Set Auto indent
+set autoindent
+
+"" Set Smart indent
+set smartindent
+
+"" Set Wrap
+set wrap
+
+"" Paste toggle
+"" http://vim.wikia.com/wiki/VimTip906
+nnoremap <F2> :set invpaste paste?<CR>
+set pastetoggle=<F2>
+set showmode
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"" => Numbers configuration
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+set number
+" set relativenumber
+" nnoremap <F3> :NumbersToggle<CR>
+" nnoremap <F4> :NumbersOnOff<CR>
+
+function! NumberToggle()
+  if(&relativenumber == 1)
+    set number
+  else
+    set relativenumber
+  endif
+endfunc
+
+set ruler
+
+"" show the cursor position all the time
+" :set rulerformat=%-14.(%l,%c%V%)\ %P
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"" => vim-javascript configuration
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+let javascript_enable_domhtmlcss=1
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"" => Searching configuration
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+"" highlight matches
+set hlsearch
+"" incremental searching
+set incsearch
+"" searches are case insensitive...
+set ignorecase
+"" ... unless they contain at least one capital letter
+set smartcase
+
+"" wildmode
+set wildmenu
+set wildmode=longest:full,full
+
+"" Disable highlight when <leader><cr> is pressed
+map <silent> <leader><cr> :noh<cr>
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"" => Autocmd configuration
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+"" You can specify commands to be executed automatically when reading or writing
+"" a file, when entering or leaving a buffer or window, and when exiting Vim.
+"" For example, you can create an autocommand to set the 'cindent' option for
+"" files matching *.c.  You can also use autocommands to implement advanced
+"" features, such as editing compressed files (see |gzip-example|).  The usual
+"" place to put autocommands is in your .vimrc or .exrc file.
+
+if has("autocmd")
+  "" In Makefiles, use real tabs, not tabs expanded to spaces
+  autocmd FileType make set noexpandtab
+
+  "" Make sure all markdown files have the correct filetype set and setup wrapping
+  autocmd BufRead,BufNewFile *.{md,markdown,mdown,mkd,mkdn,txt} setf markdown | call s:setupWrapping()
+
+  "" Treat JSON files like JavaScript
+  autocmd BufNewFile,BufRead *.json set ft=javascript
+
+  "" Vim file
+  " autocmd FileType vim setlocal expandtab shiftwidth=2 tabstop=8 softtabstop=2
+
+  "" make Python follow PEP8 ( http://www.python.org/dev/peps/pep-0008/ )
+  autocmd FileType python set softtabstop=4 tabstop=4 shiftwidth=4 textwidth=79
+
+  "" Remember last location in file, but not for commit messages.
+  "" see :help last-position-jump
+  autocmd BufReadPost * if &filetype !~ '^git\c' && line("'\"") > 0 && line("'\"") <= line("$")
+    \| exe "normal! g`\"" | endif
+
+  "" Mark Jekyll YAML frontmatter as comment
+  autocmd BufNewFile,BufRead *.{md,markdown,html,xml} sy match Comment /\%^---\_.\{-}---$/
+
+  "" Remove whitespaces on save
+  autocmd BufWrite * FixWhitespace
+endif
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"" => FZF configuration
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" fzf --color fg:252,bg:233,hl:67,fg+:252,bg+:235,hl+:81
+" fzf --color info:144,prompt:161,spinner:135,pointer:135,marker:118
+
+"" Respecting .gitignore, .hgignore, and svn:ignore
+"" Let's do the job to AG
+"" # Feed the output of ag into fzf
+"" ag -l -g '' | fzf
+""
+"" # Setting ag as the default source for fzf
+"" export FZF_DEFAULT_COMMAND='ag -l -g ""'
+""
+"" # Now fzf (w/o pipe) will use ag instead of find
+"" fzf
+""
+"" # To apply the command to CTRL-T as well
+"" export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+
+" nmap F :Ag<cr>
+map <leader>f :FZF<cr>
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"" => End File
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
