@@ -157,9 +157,17 @@ call plug#begin('~/.vim/plugged')
   Plug 'Valloric/YouCompleteMe', { 'do': './install.sh --clang-completer' }
   " Plug 'Valloric/YouCompleteMe'
 
+  "" https://github.com/scrooloose/syntastic
+  "" Syntax checking hacks for vim
+  Plug 'scrooloose/syntastic'
+
   "" https://github.com/pangloss/vim-javascript
   "" JavaScript bundle for vim, this bundle provides syntax and indent plugins.
   Plug 'pangloss/vim-javascript'
+
+  "" https://github.com/mxw/vim-jsx
+  "" React JSX syntax highlighting and indenting for vim.
+  Plug 'mxw/vim-jsx'
 
   "" https://github.com/fatih/vim-go
   "" Go development plugin for Vim
@@ -331,6 +339,19 @@ let javascript_enable_domhtmlcss=1
 
 let g:airline_powerline_fonts = 1
 
+
+""""""""""""""""""""""""""""""""""""""""""
+"" => Syntastic configuration
+""""""""""""""""""""""""""""""""""""""""""
+
+let g:syntastic_check_on_open=1
+let g:syntastic_check_on_wq=0
+let g:syntastic_error_symbol='✗'
+let g:syntastic_warning_symbol='⚠'
+let g:syntastic_always_populate_loc_list=1
+let g:syntastic_auto_loc_list=1
+
+let g:syntastic_javascript_checkers = ['eslint']
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "" => Searching configuration
