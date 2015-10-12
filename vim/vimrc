@@ -172,6 +172,10 @@ call plug#begin('~/.vim/plugged')
   "" A dark colour scheme for Vim & gVim
   Plug 'w0ng/vim-hybrid'
 
+  "" https://github.com/chriskempson/vim-tomorrow-theme
+  "" Tomorrow Theme for Vim http://github.com/chriskempson/tomorrow-theme
+  " Plug 'chriskempson/vim-tomorrow-theme'
+
 call plug#end()
 
 "" vim-plug it automatically generates help tags for all of your plugins
@@ -242,7 +246,7 @@ let NERDTreeMouseMode=2
 
 map - :NERDTreeTabsToggle<CR>
 
-let g:nerdtree_tabs_open_on_console_startup=1
+" let g:nerdtree_tabs_open_on_console_startup=1
 let g:nerdtree_tabs_focus_on_files=1
 let g:nerdtree_tabs_startup_cd=0
 
@@ -315,10 +319,17 @@ set ruler
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"" => vim-javascript configuration
+"" => Javascript configuration
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 let javascript_enable_domhtmlcss=1
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"" => Airline configuration
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+let g:airline_powerline_fonts = 1
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
