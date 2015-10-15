@@ -17,7 +17,7 @@
 " set nocompatible
 
 "" Firstly, the <Esc> key for leaving insert mode is antiquated
-inoremap jk <ESC>
+inoremap jj <ESC>
 
 "" Enable syntax highlighting
 syntax enable
