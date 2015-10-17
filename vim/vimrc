@@ -113,6 +113,14 @@ call plug#begin('~/.vim/plugged')
   "" brackets, etc.
   Plug 'raimondi/delimitmate'
 
+  "" https://github.com/tpope/vim-surround
+  "" surround.vim: quoting/parenthesizing made simple
+  Plug 'tpope/vim-surround'
+
+  "" https://github.com/tpope/vim-commentary
+  "" commentary.vim: comment stuff out
+  Plug 'tpope/vim-commentary'
+
   "" https://github.com/scrooloose/nerdtree
   "" A tree explorer plugin for vim
   Plug 'scrooloose/nerdtree'
@@ -324,6 +332,13 @@ set ruler
 
 "" show the cursor position all the time
 " :set rulerformat=%-14.(%l,%c%V%)\ %P
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"" => GitGutter configuration
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+let g:gitgutter_sign_column_always = 1
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
