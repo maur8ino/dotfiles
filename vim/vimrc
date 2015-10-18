@@ -226,8 +226,7 @@ autocmd VimEnter *
 "" => Startify configuration
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-let g:startify_session_dir = '~/.vim/session'
-let g:startify_list_order = ['files', 'dir', 'bookmarks', 'sessions']
+" let g:startify_session_dir = '~/.vim/session'
 " let g:startify_bookmarks = [
 "    \  '~/Workspaces',
 "    \  '~/Workspaces/go.sources/src/github.com/zeroed/',
@@ -306,9 +305,9 @@ set wrap
 
 "" Paste toggle
 "" http://vim.wikia.com/wiki/VimTip906
-nnoremap <F2> :set invpaste paste?<CR>
-set pastetoggle=<F2>
-set showmode
+" nnoremap <F2> :set invpaste paste?<CR>
+" set pastetoggle=<F2>
+" set showmode
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
