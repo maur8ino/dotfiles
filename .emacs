@@ -80,7 +80,7 @@
    ;; syntax checking on-fly
    flycheck
    ;; yasnippet
-   yasnippet
+   ;;yasnippet
    ;; go
    go-mode
    go-projectile
@@ -90,9 +90,9 @@
    web-beautify
    ;; javascript stuff
    js2-mode
-   js2-refactor
+   ;;js2-refactor
    ac-js2
-   react-snippets
+   ;;react-snippets
    ;; typescript
    typescript
    tss
@@ -116,7 +116,7 @@
    ;; elixir stuff
    alchemist
    elixir-mode
-   elixir-yasnippets
+   ;;elixir-yasnippets
    ;; dockerfile-mode
    dockerfile-mode
    ;; feature-mode
@@ -237,8 +237,8 @@
 
 ;; yasnippet
 ;; should be loaded before auto complete so that they can work together
-(require 'yasnippet)
-(yas-global-mode 1)
+;;(require 'yasnippet)
+;;(yas-global-mode 1)
 
 ;;; auto complete mod
 ;;; should be loaded after yasnippet so that they can work together
@@ -340,7 +340,7 @@
       web-mode-enable-current-column-highlight t)
 
 (require 'web-mode)
-(require 'react-snippets)
+;;(require 'react-snippets)
 (add-to-list 'auto-mode-alist '("\\.phtml\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.tpl\\.php\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.[agj]sp\\'" . web-mode))

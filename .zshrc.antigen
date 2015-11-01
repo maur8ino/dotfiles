@@ -51,6 +51,9 @@ eval "$(rbenv init -)"
 export NVM_DIR=~/.nvm
 source $(brew --prefix nvm)/nvm.sh
 
+# loading autojump
+[[ -s $(brew --prefix)/etc/profile.d/autojump.sh ]] && . $(brew --prefix)/etc/profile.d/autojump.sh
+
 # Setting editor
 export EDITOR="$(which nvim)"
 
@@ -66,8 +69,8 @@ export TUNA_HOME="/Users/maur8ino/projects/Tuna"
 export PATH="$TUNA_HOME:$PATH"
 
 # (Neo)Vim
-alias e='vim'
-alias vi='vim'
+alias e='nvim'
+alias vi='nvim'
 
 # Emacs
 #alias e='emacsclient -t'
