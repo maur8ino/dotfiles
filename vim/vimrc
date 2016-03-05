@@ -71,13 +71,14 @@ set directory=~/.vim.backup,/tmp
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"" => Ignore Rubinius, Sass cache files
+"" => Ignore Rubinius, Sass cache file, node_moduless
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set wildignore=*.swp
 set wildignore+=*/tmp/*,*.so,*.zip
 set wildignore+=tmp/**,*.rbc,.rbx,*.scssc,*.sassc
 set wildignore+=*.so,*.swp,*.zip
 set wildignore+=*/.Trash/**,*.pdf,*.dmg,*/Library/**,*/.rbenv/**
+set wildignore+=*/node_modules/**
 set wildignore+=*DS_Store*
 
 
@@ -121,6 +122,22 @@ call plug#begin('~/.vim/plugged')
   "" commentary.vim: comment stuff out
   Plug 'tpope/vim-commentary'
 
+  "" https://github.com/kana/vim-textobj-user
+  "" Create your own text objects
+  Plug 'kana/vim-textobj-user'
+
+  "" https://github.com/kana/vim-textobj-entire
+  "" Text objects for entire buffer
+  Plug 'kana/vim-textobj-entire'
+
+  "" https://github.com/michaeljsmith/vim-indent-object
+  "" Vim plugin that defines a new text object representing lines of code at the same indent level
+  Plug 'michaeljsmith/vim-indent-object'
+
+  "" https://github.com/kien/ctrlp.vim
+  "" Fuzzy file, buffer, mru, tag, etc finder.
+  Plug 'kien/ctrlp.vim'
+
   "" https://github.com/scrooloose/nerdtree
   "" A tree explorer plugin for vim
   Plug 'scrooloose/nerdtree'
@@ -162,13 +179,17 @@ call plug#begin('~/.vim/plugged')
   "" https://github.com/Valloric/YouCompleteMe
   "" A code-completion engine for Vim
   " Plug 'Valloric/YouCompleteMe', { 'do': function('BuildYCM') }
-  Plug 'Valloric/YouCompleteMe', { 'do': './install.sh --clang-completer' }
+  "Plug 'Valloric/YouCompleteMe', { 'do': './install.sh --clang-completer' }
   " Plug 'Valloric/YouCompleteMe'
 
   "" https://github.com/scrooloose/syntastic
   "" Syntax checking hacks for vim
   Plug 'scrooloose/syntastic'
 
+  "" https://github.com/kchmck/vim-coffee-script
+  "" CoffeeScript support for vim
+  Plug 'kchmck/vim-coffee-script'
+ "
   "" https://github.com/pangloss/vim-javascript
   "" JavaScript bundle for vim, this bundle provides syntax and indent plugins.
   Plug 'pangloss/vim-javascript'
@@ -181,6 +202,9 @@ call plug#begin('~/.vim/plugged')
   "" Go development plugin for Vim
   Plug 'fatih/vim-go'
 
+  "" https://github.com/ekalinin/Dockerfile.vim
+  "" Vim syntax file & snippets for Docker's Dockerfile
+  Plug 'ekalinin/Dockerfile.vim'
 
   "" Colors
 
