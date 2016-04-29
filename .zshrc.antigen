@@ -60,6 +60,9 @@ export EDITOR="$(which nvim)"
 # Specify your defaults in this environment variable
 export HOMEBREW_CASK_OPTS="--appdir=/Applications"
 
+# prevent sending analytics information
+export HOMEBREW_NO_ANALYTICS=1
+
 # Setting Go path
 export GOPATH=~/go
 export PATH="$GOPATH/bin:$PATH"
