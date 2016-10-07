@@ -6,39 +6,53 @@ antigen use oh-my-zsh
 
 # Antigen bundles
 antigen bundles <<EOBUNDLES
-    git
-    heroku
-    pip
-    command-not-found
+  # Package managers
+  brew
+  pip
+  gem
+  npm
+
+  # Guess what to install when running an unknown command.
+  command-not-found
+
+  # Help working with version control systems.
+  svn
+  git
+
+  # The heroku tool helper plugin.
+  heroku
+
+  # Syntax highlighting bundle.
+  zsh-users/zsh-syntax-highlighting
+
+  # History search substring
+  zsh-users/zsh-history-substring-search
+
+  # Arialdomartini
+  #arialdomartini/oh-my-git
+
+  # brew
+  robbyrussell/oh-my-zsh plugins/brew
+
+  # Completions
+  zsh-users/zsh-completions src
+  yonchu/grunt-zsh-completion
+  emallson/gulp-zsh-completion
+  felixr/docker-zsh-completion
 EOBUNDLES
-
-# Syntax highlighting bundle.
-antigen bundle zsh-users/zsh-syntax-highlighting
-
-# History search substring
-antigen-bundle zsh-users/zsh-history-substring-search
-
-# Completions
-antigen bundle zsh-users/zsh-completions src
-antigen bundle yonchu/grunt-zsh-completion
-antigen bundle emallson/gulp-zsh-completion
-antigen bundle felixr/docker-zsh-completion
-antigen bundle robbyrussell/oh-my-zsh plugins/brew-cask
 
 # Load the theme.
 antigen theme robbyrussell
 
-# Arialdomartini
-#antigen-bundle arialdomartini/oh-my-git
 #antigen theme arialdomartini/oh-my-git-themes oppa-lana-style
 
 # Tell antigen that you're done.
 antigen apply
 
-# Keybinding substring search
+# bind UP and DOWN arrow keys
 zmodload zsh/terminfo
-bindkey "$terminfo[kcuu1]" history-substring-search-up
-bindkey "$terminfo[kcud1]" history-substring-search-down
+bindkey "$terminfo[cuu1]" history-substring-search-up
+bindkey "$terminfo[cud1]" history-substring-search-down
 
 # home bin folder
 export PATH="$HOME/bin:$PATH"
