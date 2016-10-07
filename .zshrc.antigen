@@ -54,6 +54,14 @@ source $(brew --prefix nvm)/nvm.sh
 # loading autojump
 [[ -s $(brew --prefix)/etc/profile.d/autojump.sh ]] && . $(brew --prefix)/etc/profile.d/autojump.sh
 
+# gpg agent
+if test -f ~/.gnupg/.gpg-agent-info -a -n "$(pgrep gpg-agent)"; then
+  source ~/.gnupg/.gpg-agent-info
+  export GPG_AGENT_INFO
+else
+  eval $(gpg-agent --daemon --write-env-file ~/.gnupg/.gpg-agent-info)
+fi
+
 # Setting editor
 export EDITOR="$(which nvim)"
 
@@ -67,10 +75,6 @@ export HOMEBREW_NO_ANALYTICS=1
 export GOPATH=~/go
 export PATH="$GOPATH/bin:$PATH"
 
-# Tuna
-export TUNA_HOME="/Users/maur8ino/projects/Tuna"
-export PATH="$TUNA_HOME:$PATH"
-
 # (Neo)Vim
 alias e='nvim'
 alias vi='nvim'
@@ -83,8 +87,26 @@ alias vi='nvim'
 #alias vim='emacsclient -t'
 #alias vi='emacsclient -t'
 
+# mov2gif function
+function mov2gif {
+  file="$1"
+  if [ $1 ]; then
+    if [[ "$file" == *.mov || "$file" == *.MOV ]]; then
+      echo -n "Generating gif from movie '$1' ... "
+      rm "$1".gif &> /dev/null
+      ffmpeg -i "$1" -r 10 -f image2pipe -vcodec ppm - 2>/dev/null | convert -verbose +dither -layers Optimize -resize 600x600\> - gif:- 2>/dev/null | gifsicle --colors 128 --delay=5 --loop --optimize=3 --multifile - 2>/dev/null > "$1".gif
+      echo -n "done\nMoving gif to '$1.gif' ... done\n"
+    else
+      echo -n "Error: '$1' is not a .mov file!\n"
+    fi
+  else
+    echo -n "Error: no argument"
+  fi
+}
+
 # Do not enter command lines into the history list
 # if they are duplicates of the previous event
 setopt histignoredups
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+[ -f ~/.zshrc.work ] && source ~/.zshrc.work
