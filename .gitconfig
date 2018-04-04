@@ -1,0 +1,36 @@
+[core]
+	editor = vim
+	excludesfile = /Users/maur8ino/.gitignore_global
+  pager = `brew --prefix git`/share/git-core/contrib/diff-highlight/diff-highlight | less -r
+[push]
+	default = simple
+[alias]
+	st = status
+	co = checkout
+	rhh = reset --hard HEAD
+	com = checkout master
+	fa = fetch --all
+	sts = status -s
+  please = push --force-with-lease
+  frune = fetch --prune
+
+  # list only local non tracked branches
+  local-branches = !git branch -vv | cut -c 3- | awk '$3 !~/\\[/ { print $1 }'
+
+  # Show an ascii tree of the current branch
+	tr = log --graph --pretty=format:'%Cred%h%Creset %C(yellow)%d%Creset %s %C(cyan)<%an>%Creset %Cgreen(%cd)' --abbrev-commit --date=relative
+
+	# Show an ascii tree of all branches
+	tra = log --graph --pretty=format:'%Cred%h%Creset %C(yellow)%d%Creset %s %C(cyan)<%an>%Creset %Cgreen(%cd)' --abbrev-commit --date=relative --all
+
+[branch]
+[rerere]
+	enabled = true
+[pull]
+	rebase = true
+[commit]
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	required = true
+	process = git-lfs filter-process

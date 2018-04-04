@@ -1,0 +1,126 @@
+# zplug
+source ~/dotfiles/zplug/init.zsh
+
+zplug "robbyrussell/oh-my-zsh", \
+    use:"lib/*.zsh", \
+    ignore:"lib/key-bindings.zsh", \
+    defer:0
+
+# Package managers
+zplug "plugins/brew", from:oh-my-zsh
+zplug "plugins/pip", from:oh-my-zsh
+zplug "plugins/gem", from:oh-my-zsh
+zplug "plugins/npm", from:oh-my-zsh
+zplug "plugins/yarn", from:oh-my-zsh
+zplug "plugins/virtualenv", from:oh-my-zsh
+
+# Guess what to install when running an unknown command.
+zplug "plugins/command-not-found", from:oh-my-zsh, if:"[[ $OSTYPE == *darwin* ]]"
+
+# Help working with version control systems.
+zplug "plugins/svn", from:oh-my-zsh
+zplug "plugins/git", from:oh-my-zsh
+
+# The heroku tool helper plugin.
+zplug "plugins/heroku", from:oh-my-zsh
+
+# Syntax highlighting bundle.
+zplug "zsh-users/zsh-syntax-highlighting", defer:3 # Should be loaded 2nd last.
+
+# History search substring
+zplug "zsh-users/zsh-history-substring-search", defer:3 # Should be loaded last.
+
+# Zaw
+zplug "zsh-users/zaw"
+
+# Theme
+zplug 'themes/muse', from:oh-my-zsh, as:theme
+
+# Programs
+zplug "stedolan/jq", \
+    as:command, \
+    from:gh-r, \
+    rename-to:jq
+
+#zplug 'b4b4r07/zplug-doctor', lazy:yes
+
+# Install plugins if there are plugins that have not been installed
+zplug check || zplug install
+
+# Then, source plugins and add commands to $PATH
+zplug load
+
+# bind UP and DOWN arrow keys
+bindkey '^[[A' history-substring-search-up
+bindkey '^[[B' history-substring-search-down
+
+# home bin folder
+export PATH="$HOME/bin:$PATH"
+
+# rbenv
+export PATH="$HOME/.rbenv/bin:$PATH"
+eval "$(rbenv init -)"
+
+# nvm
+export NVM_DIR=~/.nvm
+source $(brew --prefix nvm)/nvm.sh
+
+# loading autojump
+[[ -s $(brew --prefix)/etc/profile.d/autojump.sh ]] && . $(brew --prefix)/etc/profile.d/autojump.sh
+
+# gpg agent
+if test -f ~/.gnupg/.gpg-agent-info -a -n "$(pgrep gpg-agent)"; then
+  source ~/.gnupg/.gpg-agent-info
+  export GPG_AGENT_INFO
+else
+  eval $(gpg-agent --daemon --write-env-file ~/.gnupg/.gpg-agent-info)
+fi
+
+# Setting editor
+export EDITOR="$(which nvim)"
+
+# Specify your defaults in this environment variable
+export HOMEBREW_CASK_OPTS="--appdir=/Applications"
+
+# prevent sending analytics information
+export HOMEBREW_NO_ANALYTICS=1
+
+# Setting Go path
+export GOPATH=~/go
+export PATH="$GOPATH/bin:$PATH"
+
+# (Neo)Vim
+alias e='nvim'
+alias vi='nvim'
+
+# Emacs
+#alias e='emacsclient -t'
+#alias e='emacsclient -t'
+#alias vi='emacsclient -t'
+#alias ec='emacsclient -c'
+#alias vim='emacsclient -t'
+#alias vi='emacsclient -t'
+
+# mov2gif function
+function mov2gif {
+  file="$1"
+  if [ $1 ]; then
+    if [[ "$file" == *.mov || "$file" == *.MOV ]]; then
+      echo -n "Generating gif from movie '$1' ... "
+      rm "$1".gif &> /dev/null
+      ffmpeg -i "$1" -r 10 -f image2pipe -vcodec ppm - 2>/dev/null | convert -verbose +dither -layers Optimize -resize 600x600\> - gif:- 2>/dev/null | gifsicle --colors 128 --delay=5 --loop --optimize=3 --multifile - 2>/dev/null > "$1".gif
+      echo -n "done\nMoving gif to '$1.gif' ... done\n"
+    else
+      echo -n "Error: '$1' is not a .mov file!\n"
+    fi
+  else
+    echo -n "Error: no argument"
+  fi
+}
+
+# Do not enter command lines into the history list
+# if they are duplicates of the previous event
+setopt histignoredups
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+[ -f ~/.zshrc.work ] && source ~/.zshrc.work
