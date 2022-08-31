@@ -58,8 +58,8 @@ bindkey "$terminfo[cud1]" history-substring-search-down
 export PATH="$HOME/bin:$PATH"
 
 # rbenv
-export PATH="$HOME/.rbenv/bin:$PATH"
-eval "$(rbenv init -)"
+#export PATH="$HOME/.rbenv/bin:$PATH"
+#eval "$(rbenv init -)"
 
 # nvm
 export NVM_DIR=~/.nvm
@@ -69,12 +69,13 @@ source $(brew --prefix nvm)/nvm.sh
 [[ -s $(brew --prefix)/etc/profile.d/autojump.sh ]] && . $(brew --prefix)/etc/profile.d/autojump.sh
 
 # gpg agent
-if test -f ~/.gnupg/.gpg-agent-info -a -n "$(pgrep gpg-agent)"; then
-  source ~/.gnupg/.gpg-agent-info
-  export GPG_AGENT_INFO
-else
-  eval $(gpg-agent --daemon --write-env-file ~/.gnupg/.gpg-agent-info)
-fi
+#export PATH="$(brew --prefix)/opt/gpg-agent/bin:$PATH"
+#if test -f ~/.gnupg/.gpg-agent-info -a -n "$(pgrep gpg-agent)"; then
+#  source ~/.gnupg/.gpg-agent-info
+#  export GPG_AGENT_INFO
+#else
+#  eval $(gpg-agent --daemon --write-env-file ~/.gnupg/.gpg-agent-info)
+#fi
 
 # Setting editor
 export EDITOR="$(which nvim)"
@@ -90,8 +91,8 @@ export GOPATH=~/go
 export PATH="$GOPATH/bin:$PATH"
 
 # (Neo)Vim
-alias e='nvim'
-alias vi='nvim'
+#alias e='nvim'
+#alias vi='nvim'
 
 # Emacs
 #alias e='emacsclient -t'
@@ -100,6 +101,17 @@ alias vi='nvim'
 #alias ec='emacsclient -c'
 #alias vim='emacsclient -t'
 #alias vi='emacsclient -t'
+
+# Add Visual Studio Code (code)
+export PATH="$PATH:/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
+
+# Anaconda
+#export PATH=/usr/local/anaconda3/bin:"$PATH"
+
+# Remy Sharp's nice cli tools
+#alias cat='bat'
+#alias ping='prettyping --nolegend'
+#alias preview="fzf --preview 'bat --color \"always\" {}'"
 
 # mov2gif function
 function mov2gif {
@@ -124,3 +136,4 @@ setopt histignoredups
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 [ -f ~/.zshrc.work ] && source ~/.zshrc.work
+
